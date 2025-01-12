@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_aplication/services/auth_service.dart';
-import 'package:intl/intl.dart'; // Asegúrate de importar intl
+import 'package:intl/intl.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -23,7 +23,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
   final _formKey = GlobalKey<FormState>();
 
-  // Función para seleccionar la fecha de nacimiento
+  // Function to pick the birthdate
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
       context: context,
@@ -34,12 +34,12 @@ class _RegisterPageState extends State<RegisterPage> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _birthDateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate!); // Aquí se usa DateFormat
+        _birthDateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate!);
       });
     }
   }
 
-  // Función para registrar al usuario
+  // Function to handle the registration process
   void _register() async {
     if (_formKey.currentState?.validate() ?? false) {
       setState(() {
@@ -56,32 +56,38 @@ class _RegisterPageState extends State<RegisterPage> {
       };
 
       try {
+        // Attempting registration through the AuthService
         final success = await AuthService.register(userData);
 
-        if (success) {
-          Navigator.pop(context); // Redirigir si el registro es exitoso
-        } else {
-          setState(() {
-            _errorMessage = 'Registration failed. Please try again.'; // Manejo de error genérico
-          });
+        if (mounted) {
+          if (success) {
+            Navigator.pop(context);
+          } else {
+            setState(() {
+              _errorMessage = 'Registration failed. Please try again.';
+            });
+          }
         }
       } catch (e) {
-        setState(() {
-          // Verificar si el error contiene "Email already registered"
-          if (e.toString().contains("Email already registered")) {
-            _errorMessage = 'The email is already registered. Please use a different email.';
-          } else {
-            _errorMessage = 'An error occurred: $e'; // Error genérico
-          }
-        });
+        if (mounted) {
+          setState(() {
+            // Check if the error contains "Email already registered"
+            if (e.toString().contains("Email already registered")) {
+              _errorMessage = 'The email is already registered. Please use a different email.';
+            } else {
+              _errorMessage = 'An error occurred: $e';
+            }
+          });
+        }
       } finally {
-        setState(() {
-          _loading = false;
-        });
+        if (mounted) {
+          setState(() {
+            _loading = false;
+          });
+        }
       }
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +100,7 @@ class _RegisterPageState extends State<RegisterPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Campo de Email
+              // Email field with validation
               TextFormField(
                 controller: _emailController,
                 decoration: const InputDecoration(labelText: "Email"),
@@ -107,7 +113,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-              // Campo de Contraseña
+              // Password field with validation
               TextFormField(
                 controller: _passwordController,
                 decoration: const InputDecoration(labelText: "Password"),
@@ -121,7 +127,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-              // Campo de Nombre
+              // First Name field with validation
               TextFormField(
                 controller: _firstNameController,
                 decoration: const InputDecoration(labelText: "First Name"),
@@ -133,7 +139,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-              // Campo de Apellido
+              // Last Name field with validation
               TextFormField(
                 controller: _lastNameController,
                 decoration: const InputDecoration(labelText: "Last Name"),
@@ -145,7 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   return null;
                 },
               ),
-              // Selección de Fecha de Nacimiento
+              // Birth Date field with date picker
               GestureDetector(
                 onTap: () => _selectDate(context),
                 child: AbsorbPointer(
@@ -161,14 +167,14 @@ class _RegisterPageState extends State<RegisterPage> {
                   ),
                 ),
               ),
-              // Campo de País
+              // Country field (optional)
               TextFormField(
                 controller: _countryController,
                 decoration: const InputDecoration(labelText: "Country (Optional)"),
                 maxLength: 30,
               ),
               const SizedBox(height: 16.0),
-              // Mostrar el cargando o el botón de registro
+              // Display loading indicator or the register button
               if (_loading)
                 const CircularProgressIndicator()
               else
@@ -177,16 +183,16 @@ class _RegisterPageState extends State<RegisterPage> {
                   child: const Text("Register"),
                 ),
               const SizedBox(height: 8.0),
-              // Mensaje de error si ocurre
+              // Error message display
               if (_errorMessage.isNotEmpty)
                 Text(
                   _errorMessage,
                   style: const TextStyle(color: Colors.red),
                 ),
-              // Enlace para ir a la página de Login
+              // Login redirect link
               TextButton(
                 onPressed: () {
-                  Navigator.pop(context); 
+                  Navigator.pop(context);
                 },
                 child: const Text("Already have an account? Login"),
               ),

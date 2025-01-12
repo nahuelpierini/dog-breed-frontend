@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_aplication/widgets/collapsing_appbar.dart';
 import 'package:frontend_aplication/widgets/image_picker_widget.dart';
-import 'package:frontend_aplication/pages/profile_page.dart'; // Importa tu nueva página de perfil
-
+import 'package:frontend_aplication/pages/profile_page.dart';
 
 class CollapsingAppbarWithTabsPage extends StatefulWidget {
   const CollapsingAppbarWithTabsPage({Key? key}) : super(key: key);
 
   @override
-  _CollapsingAppbarWithTabsPageState createState() => _CollapsingAppbarWithTabsPageState();
+  CollapsingAppbarWithTabsPageState createState() => CollapsingAppbarWithTabsPageState();
 }
 
-class _CollapsingAppbarWithTabsPageState extends State<CollapsingAppbarWithTabsPage> {
+class CollapsingAppbarWithTabsPageState extends State<CollapsingAppbarWithTabsPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 3, 
       child: Scaffold(
         body: NestedScrollView(
+          // The Sliver header builder to manage the collapsing app bar
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
             return <Widget>[
               const CollapsingAppBar(),
@@ -25,9 +25,9 @@ class _CollapsingAppbarWithTabsPageState extends State<CollapsingAppbarWithTabsP
           },
           body: TabBarView(
             children: [
-              const ImagePickerWidget(), // Widget para seleccionar imágenes
-              Center(child: Text("Breeds")), // Aquí podrías poner más funcionalidades
-              const ProfilePage(), // Cambiado para incluir el ProfilePage
+              const ImagePickerWidget(), 
+              Center(child: Text("Breeds")), // Placeholder tab for Breeds section, add more features later
+              const ProfilePage(), 
             ],
           ),
         ),

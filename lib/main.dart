@@ -1,20 +1,28 @@
 import 'package:flutter/material.dart';
-//import 'package:frontend_aplication/pages/home_page.dart';
 import 'package:frontend_aplication/pages/login_page.dart';
 
-
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
+/// Root widget of the application
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: "Dog Breed Detection",
-      home: LoginPage(),
+    return MaterialApp(
+      title: 'Dog Breed Detection',
+      theme: _buildTheme(),
+      home: const LoginPage(),
+    );
+  }
+
+  /// Method to define and return the app's theme
+  ThemeData _buildTheme() {
+    return ThemeData(
+      primarySwatch: Colors.blue,
+      visualDensity: VisualDensity.adaptivePlatformDensity,
     );
   }
 }

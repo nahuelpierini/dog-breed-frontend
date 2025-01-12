@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_aplication/models/user.dart';
 import 'package:frontend_aplication/services/user_service.dart';
+import 'package:intl/intl.dart';
 
 class EditProfilePage extends StatefulWidget {
   final User user;
@@ -8,10 +9,10 @@ class EditProfilePage extends StatefulWidget {
   const EditProfilePage({Key? key, required this.user}) : super(key: key);
 
   @override
-  _EditProfilePageState createState() => _EditProfilePageState();
+  EditProfilePageState createState() => EditProfilePageState();
 }
 
-class _EditProfilePageState extends State<EditProfilePage> {
+class EditProfilePageState extends State<EditProfilePage> {
   final _formKey = GlobalKey<FormState>();
   late TextEditingController _firstNameController;
   late TextEditingController _lastNameController;
@@ -23,8 +24,28 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
     _firstNameController = TextEditingController(text: widget.user.firstName);
     _lastNameController = TextEditingController(text: widget.user.lastName);
-    _birthDateController = TextEditingController(text: widget.user.birthDate);
+
+
+    _birthDateController = TextEditingController(
+      text: formatDate(widget.user.birthDate ?? ''),
+    );
+
     _countryController = TextEditingController(text: widget.user.country);
+  }
+
+  String formatDate(String dateStr) {
+    if (dateStr.isEmpty) {
+      return '';
+    }
+
+    try {
+      final DateFormat inputFormat = DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+      final DateFormat outputFormat = DateFormat("yyyy-MM-dd");
+      final date = inputFormat.parse(dateStr);
+      return outputFormat.format(date);
+    } catch (e) {
+      return dateStr;
+    }
   }
 
   Future<void> _saveProfile() async {
@@ -39,16 +60,22 @@ class _EditProfilePageState extends State<EditProfilePage> {
       try {
         final response = await UserService.updateUserProfile(updatedUser);
         if (response) {
-          Navigator.pop(context, true); // Vuelve a la pantalla anterior y pasa true como resultado
+          if (mounted) {
+            Navigator.pop(context, true);
+          }
         } else {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Failed to update profile')),
-          );
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(content: Text('Failed to update profile')),
+            );
+          }
         }
       } catch (e) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: $e')),
-        );
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Error: $e')),
+          );
+        }
       }
     }
   }
@@ -76,21 +103,21 @@ class _EditProfilePageState extends State<EditProfilePage> {
               TextFormField(
                 controller: _birthDateController,
                 decoration: const InputDecoration(
-                  labelText: 'Birth Date (YYYY-MM-DD)',
-                  suffixIcon: Icon(Icons.calendar_today), // Ícono de calendario
+                  labelText: 'Birth Date',
+                  suffixIcon: Icon(Icons.calendar_today),
                 ),
-                readOnly: true, // Hace que el campo sea de solo lectura
+                readOnly: true,
                 onTap: () async {
                   DateTime? pickedDate = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
-                    firstDate: DateTime(1900), // Fecha mínima
-                    lastDate: DateTime.now(), // Fecha máxima
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime.now(),
                   );
 
                   if (pickedDate != null) {
                     setState(() {
-                      _birthDateController.text = pickedDate.toIso8601String().split('T')[0];
+                      _birthDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
                     });
                   }
                 },

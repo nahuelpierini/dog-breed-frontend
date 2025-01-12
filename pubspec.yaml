@@ -1,7 +1,7 @@
 name: frontend_aplication
 description: A new Flutter project.
 
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: 'none'
 
 version: 0.0.1+1
 
@@ -20,6 +20,8 @@ dependencies:
   path_provider: ^2.0.11
   flutter_secure_storage: ^5.0.2
   intl: ^0.18.0
+  mime: ^1.0.0
+  http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:
@@ -31,3 +33,6 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/icons/
+    - assets/images/profile.jpg

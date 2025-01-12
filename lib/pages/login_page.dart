@@ -1,7 +1,6 @@
-// login_page.dart
 import 'package:flutter/material.dart';
-import 'package:frontend_aplication/pages/home_page.dart'; // Importa la página de inicio
-import 'package:frontend_aplication/services/auth_service.dart'; // Servicio para autenticación
+import 'package:frontend_aplication/pages/home_page.dart';
+import 'package:frontend_aplication/services/auth_service.dart';
 import 'package:frontend_aplication/pages/register_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -20,13 +19,15 @@ class _LoginPageState extends State<LoginPage> {
   @override
   void initState() {
     super.initState();
-    _checkAuthStatus(); // Verificar si ya hay un token
+    _checkAuthStatus();
   }
 
+  // Check authentication status and redirect if a token is found
   Future<void> _checkAuthStatus() async {
     final token = await AuthService.getToken();
-    if (token != null) {
-      // Si ya hay un token, redirigir a la HomePage
+    
+    if (token != null && mounted) {
+      // Redirect to HomePage if a token is found
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
@@ -34,6 +35,8 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
+
+  // Login function to handle user authentication
   void _login() async {
     setState(() {
       _loading = true;
@@ -45,27 +48,34 @@ class _LoginPageState extends State<LoginPage> {
         _passwordController.text,
       );
 
-      if (success) {
-        // Redirigir a HomePage
+      if (success && mounted) {
+        // Redirect to HomePage if login is successful
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomePage()),
         );
       } else {
-        setState(() {
-          _errorMessage = 'Login failed. Please check your credentials.';
-        });
+        if (mounted) {
+          setState(() {
+            _errorMessage = 'Login failed. Please check your credentials.';
+          });
+        }
       }
     } catch (e) {
-      setState(() {
-        _errorMessage = 'An error occurred: $e';
-      });
+      if (mounted) {
+        setState(() {
+          _errorMessage = 'An error occurred: $e';
+        });
+      }
     } finally {
-      setState(() {
-        _loading = false;
-      });
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
+      }
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_aplication/pages/edit_dog_page.dart';
-import 'package:frontend_aplication/services/user_service.dart'; // Asegúrate de crear este servicio
-import 'package:frontend_aplication/models/user.dart'; // Asegúrate de crear este modelo
+import 'package:frontend_aplication/services/user_service.dart';
+import 'package:frontend_aplication/models/user.dart'; 
 import 'package:frontend_aplication/models/dog.dart';
-import 'package:frontend_aplication/services/auth_service.dart'; // Importa el AuthService para el logout
-import 'package:frontend_aplication/pages/login_page.dart'; // Asegúrate de tener una página de login
-import 'package:frontend_aplication/pages/edit_profile_page.dart'; // Importa la página de edición del perfil
-
+import 'package:frontend_aplication/services/auth_service.dart';
+import 'package:frontend_aplication/pages/login_page.dart'; 
+import 'package:frontend_aplication/pages/edit_profile_page.dart'; 
+import 'package:intl/intl.dart'; 
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({Key? key}) : super(key: key);
 
   @override
-  _ProfilePageState createState() => _ProfilePageState();
+  ProfilePageState createState() => ProfilePageState();
 }
 
-class _ProfilePageState extends State<ProfilePage> {
-  User? _user; // Permite valores nulos
+class ProfilePageState extends State<ProfilePage> {
+  User? _user;
   List<Dog> _dogs = [];
   bool _loading = true;
   String _errorMessage = '';
@@ -24,27 +24,43 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _checkAuthStatus(); // Verificar si hay token
+    _checkAuthStatus(); 
     _fetchProfileData();
   }
 
-  Future<void> _checkAuthStatus() async {
-    final token = await AuthService.getToken();
-    if (token == null) {
-      // Si no hay token, redirigir al LoginPage
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
+  // Function to format the date
+  String formatDate(String dateStr) {
+    try {
+      print("Fecha recibida: $dateStr");
+      final DateFormat inputFormat = DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+      final DateFormat outputFormat = DateFormat("yyyy-MM-dd");
+      final date = inputFormat.parse(dateStr);
+      return outputFormat.format(date); 
+    } catch (e) {
+      return "Invalid date: $e";
     }
   }
 
+  // Check authentication status
+  Future<void> _checkAuthStatus() async {
+    final token = await AuthService.getToken();
+    if (token == null) {
+      if (mounted) { 
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const LoginPage()),
+        );
+      }
+    }
+  }
+
+  // Obtains user and dog profile data
   Future<void> _fetchProfileData() async {
     try {
       final userData = await UserService.getUserProfile();
       final dogsData = await UserService.getUserDogs();
       setState(() {
-        _user = userData; // Puede ser null si no hay datos
+        _user = userData;
         _dogs = dogsData;
         _loading = false;
       });
@@ -56,12 +72,15 @@ class _ProfilePageState extends State<ProfilePage> {
     }
   }
 
+  // Logout session
   Future<void> _logout() async {
-    await AuthService.logout(); // Llamamos al logout del AuthService
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(builder: (context) => const LoginPage()), // Redirigimos al LoginPage
-    );
+    await AuthService.logout();
+    if (mounted) { 
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const LoginPage()),
+      );
+    }
   }
 
   @override
@@ -71,7 +90,7 @@ class _ProfilePageState extends State<ProfilePage> {
         title: const Text("Profile"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit), // Icono de edición
+            icon: const Icon(Icons.edit), 
             onPressed: () async {
               if (_user != null) {
                 final result = await Navigator.push(
@@ -81,7 +100,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 );
 
-                // Si se actualizó el perfil, refresca los datos
+                // Refresh profile data if updated
                 if (result == true) {
                   _fetchProfileData();
                 }
@@ -89,8 +108,8 @@ class _ProfilePageState extends State<ProfilePage> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.exit_to_app), // Icono de logout
-            onPressed: _logout, // Llama al método _logout cuando se presione
+            icon: const Icon(Icons.exit_to_app), 
+            onPressed: _logout, 
           ),
         ],
       ),
@@ -109,11 +128,11 @@ class _ProfilePageState extends State<ProfilePage> {
                         ? ListTile(
                             title: Text('${_user!.firstName} ${_user!.lastName}'),
                             subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start, // Alineación a la izquierda
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(_user!.email),
-                                Text(_user!.country ?? " "), // Controlamos valores nulos
-                                Text(_user!.birthDate ?? " ") 
+                                Text(_user!.country ?? " "),
+                                Text(formatDate(_user!.birthDate ?? " "))
                               ],
                             ),
                           )
@@ -134,7 +153,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                       ),
                                     );
 
-                                    // Si se agregó un perro, actualiza la lista
+                                    // If a dog was added, refresh the list
                                     if (result == true) {
                                       _fetchProfileData();
                                     }
@@ -150,9 +169,9 @@ class _ProfilePageState extends State<ProfilePage> {
                                 return ListTile(
                                   title: Text(dog.name),
                                   subtitle: Text('${dog.breed}, ${dog.age} years old'),
-                                  leading: dog.imageUrl != null && dog.imageUrl!.isNotEmpty
-                                      ? Image.network(dog.imageUrl!)  // Si hay URL de imagen, la carga
-                                      : const Icon(                   // Si no hay URL, muestra un ícono
+                                  leading: dog.imageUrl.isNotEmpty == true
+                                      ? Image.network(dog.imageUrl)
+                                      : const Icon(
                                           Icons.image,
                                           size: 50.0,
                                           color: Colors.grey,
@@ -160,7 +179,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                   trailing: IconButton(
                                     icon: const Icon(Icons.edit),
                                     onPressed: () async {
-                                      // Abre la página de edición
+                                      // Navigate to the dog edit page
                                       final result = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -168,7 +187,7 @@ class _ProfilePageState extends State<ProfilePage> {
                                         ),
                                       );
 
-                                      // Refresca los datos si se actualizó algo
+                                      // Refresh data if any update was made
                                       if (result == true) {
                                         _fetchProfileData();
                                       }

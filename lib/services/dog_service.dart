@@ -1,9 +1,8 @@
-// dog_service.dart
 import 'package:http/http.dart' as http;
 import 'package:frontend_aplication/services/auth_service.dart';
 
 class DogService {
-  static const String _baseUrl = 'http://localhost:5000/';
+  static const String _baseUrl = 'https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/';
   static final http.Client _client = http.Client();
 
   static Future<void> updateDog(String dogId, Map<String, String> dogData) async {
@@ -16,7 +15,7 @@ class DogService {
         "Authorization": "Bearer $token",
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: dogData, // No es necesario incluir imageUrl si no hay imagen
+      body: dogData,
     );
 
     if (response.statusCode != 200) {
@@ -34,12 +33,11 @@ class DogService {
         "Authorization": "Bearer $token",
         "Content-Type": "application/x-www-form-urlencoded",
       },
-      body: dogData, // No incluir la imagen si no se sube una
+      body: dogData,
     );
 
     if (response.statusCode != 200) {
       throw Exception('Failed to create dog');
     }
   }
-  
 }

@@ -8,10 +8,10 @@ class EditDogPage extends StatefulWidget {
   const EditDogPage({Key? key, this.dog}) : super(key: key);
 
   @override
-  _EditDogPageState createState() => _EditDogPageState();
+  EditDogPageState createState() => EditDogPageState();
 }
 
-class _EditDogPageState extends State<EditDogPage> {
+class EditDogPageState extends State<EditDogPage> {
   final _formKey = GlobalKey<FormState>();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _breedController = TextEditingController();
@@ -48,15 +48,24 @@ class _EditDogPageState extends State<EditDogPage> {
         await DogService.createDog(dogData);
       }
 
-      Navigator.pop(context, true);
+      // Ensure the widget is still mounted before navigating or showing SnackBar
+      if (mounted) {
+        Navigator.pop(context, true);
+      }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Error: $e')),
-      );
+      // Ensure the widget is still mounted before showing the SnackBar
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Error: $e')),
+        );
+      }
     } finally {
-      setState(() {
-        _loading = false;
-      });
+      // Ensure the widget is still mounted before updating loading state
+      if (mounted) {
+        setState(() {
+          _loading = false;
+        });
+      }
     }
   }
 

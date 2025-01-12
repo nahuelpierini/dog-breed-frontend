@@ -2,26 +2,25 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:frontend_aplication/models/user.dart';
 import 'package:frontend_aplication/models/dog.dart';
-import 'package:frontend_aplication/services/auth_service.dart'; // Asegúrate de importar el AuthService
+import 'package:frontend_aplication/services/auth_service.dart';
 
 class UserService {
-  static const String _baseUrl = 'http://localhost:5000/';
+  static const String _baseUrl = 'https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/';
   static final http.Client _client = http.Client();
 
-  // Cambiado el tipo de retorno a Future<User?>
   static Future<User?> getUserProfile() async {
     final url = Uri.parse('$_baseUrl/profile');
-    final token = await AuthService.getToken(); // Obtiene el token
+    final token = await AuthService.getToken(); 
 
     final response = await _client.get(
       url,
-      headers: {"Authorization": "Bearer $token"}, // Usa el token aquí
+      headers: {"Authorization": "Bearer $token"}, 
     );
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body)['data'];
       if (data == null) {
-        return null; // Retorna null si no hay datos
+        return null; 
       }
       return User.fromJson(data);
     } else {
@@ -31,11 +30,11 @@ class UserService {
 
   static Future<List<Dog>> getUserDogs() async {
     final url = Uri.parse('$_baseUrl/get_dog');
-    final token = await AuthService.getToken(); // Obtiene el token
+    final token = await AuthService.getToken();
 
     final response = await _client.get(
       url,
-      headers: {"Authorization": "Bearer $token"}, // Usa el token aquí
+      headers: {"Authorization": "Bearer $token"},
     );
 
     if (response.statusCode == 200) {
