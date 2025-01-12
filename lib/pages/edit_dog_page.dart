@@ -5,7 +5,7 @@ import 'package:frontend_aplication/services/dog_service.dart'; // Crea este ser
 class EditDogPage extends StatefulWidget {
   final Dog? dog;
 
-  const EditDogPage({Key? key, this.dog}) : super(key: key);
+  const EditDogPage({super.key, this.dog});
 
   @override
   EditDogPageState createState() => EditDogPageState();
@@ -106,7 +106,8 @@ class EditDogPageState extends State<EditDogPage> {
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _saveDog,
-                      child: Text(widget.dog != null ? 'Update Dog' : 'Add Dog'),
+                      child:
+                          Text(widget.dog != null ? 'Update Dog' : 'Add Dog'),
                     ),
                   ],
                 ),

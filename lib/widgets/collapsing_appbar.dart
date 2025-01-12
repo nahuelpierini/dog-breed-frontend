@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 /// A custom collapsing app bar with a flexible space and a tab bar.
 class CollapsingAppBar extends StatelessWidget {
-  const CollapsingAppBar({Key? key}) : super(key: key);
+  const CollapsingAppBar({super.key});
 
   @override
   Widget build(BuildContext context) {

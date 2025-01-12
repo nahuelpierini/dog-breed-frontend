@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_aplication/pages/edit_dog_page.dart';
 import 'package:frontend_aplication/services/user_service.dart';
-import 'package:frontend_aplication/models/user.dart'; 
+import 'package:frontend_aplication/models/user.dart';
 import 'package:frontend_aplication/models/dog.dart';
 import 'package:frontend_aplication/services/auth_service.dart';
-import 'package:frontend_aplication/pages/login_page.dart'; 
-import 'package:frontend_aplication/pages/edit_profile_page.dart'; 
-import 'package:intl/intl.dart'; 
+import 'package:frontend_aplication/pages/login_page.dart';
+import 'package:frontend_aplication/pages/edit_profile_page.dart';
+import 'package:intl/intl.dart';
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  const ProfilePage({super.key});
 
   @override
   ProfilePageState createState() => ProfilePageState();
@@ -24,7 +24,7 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _checkAuthStatus(); 
+    _checkAuthStatus();
     _fetchProfileData();
   }
 
@@ -32,10 +32,11 @@ class ProfilePageState extends State<ProfilePage> {
   String formatDate(String dateStr) {
     try {
       print("Fecha recibida: $dateStr");
-      final DateFormat inputFormat = DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+      final DateFormat inputFormat =
+          DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
       final DateFormat outputFormat = DateFormat("yyyy-MM-dd");
       final date = inputFormat.parse(dateStr);
-      return outputFormat.format(date); 
+      return outputFormat.format(date);
     } catch (e) {
       return "Invalid date: $e";
     }
@@ -45,7 +46,7 @@ class ProfilePageState extends State<ProfilePage> {
   Future<void> _checkAuthStatus() async {
     final token = await AuthService.getToken();
     if (token == null) {
-      if (mounted) { 
+      if (mounted) {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -75,7 +76,7 @@ class ProfilePageState extends State<ProfilePage> {
   // Logout session
   Future<void> _logout() async {
     await AuthService.logout();
-    if (mounted) { 
+    if (mounted) {
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -90,7 +91,7 @@ class ProfilePageState extends State<ProfilePage> {
         title: const Text("Profile"),
         actions: [
           IconButton(
-            icon: const Icon(Icons.edit), 
+            icon: const Icon(Icons.edit),
             onPressed: () async {
               if (_user != null) {
                 final result = await Navigator.push(
@@ -108,8 +109,8 @@ class ProfilePageState extends State<ProfilePage> {
             },
           ),
           IconButton(
-            icon: const Icon(Icons.exit_to_app), 
-            onPressed: _logout, 
+            icon: const Icon(Icons.exit_to_app),
+            onPressed: _logout,
           ),
         ],
       ),
@@ -126,7 +127,8 @@ class ProfilePageState extends State<ProfilePage> {
                   children: [
                     _user != null
                         ? ListTile(
-                            title: Text('${_user!.firstName} ${_user!.lastName}'),
+                            title:
+                                Text('${_user!.firstName} ${_user!.lastName}'),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -136,7 +138,7 @@ class ProfilePageState extends State<ProfilePage> {
                               ],
                             ),
                           )
-                      : const Text('No user data available'),
+                        : const Text('No user data available'),
                     const Divider(),
                     Expanded(
                       child: _dogs.isEmpty
@@ -168,7 +170,8 @@ class ProfilePageState extends State<ProfilePage> {
                                 final dog = _dogs[index];
                                 return ListTile(
                                   title: Text(dog.name),
-                                  subtitle: Text('${dog.breed}, ${dog.age} years old'),
+                                  subtitle: Text(
+                                      '${dog.breed}, ${dog.age} years old'),
                                   leading: dog.imageUrl.isNotEmpty == true
                                       ? Image.network(dog.imageUrl)
                                       : const Icon(
@@ -183,7 +186,8 @@ class ProfilePageState extends State<ProfilePage> {
                                       final result = await Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: (context) => EditDogPage(dog: dog),
+                                          builder: (context) =>
+                                              EditDogPage(dog: dog),
                                         ),
                                       );
 

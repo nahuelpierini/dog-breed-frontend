@@ -1,8 +1,6 @@
 name: frontend_aplication
 description: A new Flutter project.
 
-publish_to: 'none'
-
 version: 0.0.1+1
 
 environment:
@@ -13,23 +11,23 @@ dependencies:
     sdk: flutter
   english_words: ^4.0.0
   provider: ^6.0.0
-  image_picker: ^0.8.4+1
-  permission_handler: ^10.0.0
-  http: ^0.13.3
+  image_picker: ^1.1.2
+  permission_handler: ^11.3.1
+  http: ^1.2.2
   file_picker: ^8.1.7
   path_provider: ^2.0.11
-  flutter_secure_storage: ^5.0.2
-  intl: ^0.18.0
-  mime: ^1.0.0
+  flutter_secure_storage: ^9.2.4
+  intl: ^0.20.1
+  mime: ^2.0.0
   http_parser: ^4.0.2
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.0.0
-  http_mock_adapter: ^0.3.2
+  http_mock_adapter: ^0.6.1
 
-  flutter_lints: ^2.0.0
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true

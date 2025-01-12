@@ -6,7 +6,7 @@ import 'package:flutter/foundation.dart';
 import 'package:frontend_aplication/services/api_service.dart';
 
 class ImagePickerWidget extends StatefulWidget {
-  const ImagePickerWidget({Key? key}) : super(key: key);
+  const ImagePickerWidget({super.key});
 
   @override
   ImagePickerWidgetState createState() => ImagePickerWidgetState();

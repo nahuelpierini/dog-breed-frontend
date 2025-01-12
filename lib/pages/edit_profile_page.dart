@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 class EditProfilePage extends StatefulWidget {
   final User user;
 
-  const EditProfilePage({Key? key, required this.user}) : super(key: key);
+  const EditProfilePage({super.key, required this.user});
 
   @override
   EditProfilePageState createState() => EditProfilePageState();
@@ -25,7 +25,6 @@ class EditProfilePageState extends State<EditProfilePage> {
     _firstNameController = TextEditingController(text: widget.user.firstName);
     _lastNameController = TextEditingController(text: widget.user.lastName);
 
-
     _birthDateController = TextEditingController(
       text: formatDate(widget.user.birthDate ?? ''),
     );
@@ -39,7 +38,8 @@ class EditProfilePageState extends State<EditProfilePage> {
     }
 
     try {
-      final DateFormat inputFormat = DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+      final DateFormat inputFormat =
+          DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
       final DateFormat outputFormat = DateFormat("yyyy-MM-dd");
       final date = inputFormat.parse(dateStr);
       return outputFormat.format(date);
@@ -93,12 +93,14 @@ class EditProfilePageState extends State<EditProfilePage> {
               TextFormField(
                 controller: _firstNameController,
                 decoration: const InputDecoration(labelText: 'First Name'),
-                validator: (value) => value!.isEmpty ? 'First Name is required' : null,
+                validator: (value) =>
+                    value!.isEmpty ? 'First Name is required' : null,
               ),
               TextFormField(
                 controller: _lastNameController,
                 decoration: const InputDecoration(labelText: 'Last Name'),
-                validator: (value) => value!.isEmpty ? 'Last Name is required' : null,
+                validator: (value) =>
+                    value!.isEmpty ? 'Last Name is required' : null,
               ),
               TextFormField(
                 controller: _birthDateController,
@@ -117,16 +119,19 @@ class EditProfilePageState extends State<EditProfilePage> {
 
                   if (pickedDate != null) {
                     setState(() {
-                      _birthDateController.text = DateFormat('yyyy-MM-dd').format(pickedDate);
+                      _birthDateController.text =
+                          DateFormat('yyyy-MM-dd').format(pickedDate);
                     });
                   }
                 },
-                validator: (value) => value!.isEmpty ? 'Birth Date is required' : null,
+                validator: (value) =>
+                    value!.isEmpty ? 'Birth Date is required' : null,
               ),
               TextFormField(
                 controller: _countryController,
                 decoration: const InputDecoration(labelText: 'Country'),
-                validator: (value) => value!.isEmpty ? 'Country is required' : null,
+                validator: (value) =>
+                    value!.isEmpty ? 'Country is required' : null,
               ),
               const SizedBox(height: 20),
               ElevatedButton(
