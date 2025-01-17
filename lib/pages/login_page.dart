@@ -35,7 +35,6 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
   // Login function to handle user authentication
   void _login() async {
     setState(() {
@@ -76,49 +75,86 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double containerWidth = screenWidth > 600 ? 400 : screenWidth * 0.8;
+
     return Scaffold(
-      appBar: AppBar(title: const Text("Login")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            TextField(
-              controller: _emailController,
-              decoration: const InputDecoration(labelText: "Email"),
+      appBar: AppBar(),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Container(
+            width: containerWidth,
+            padding: const EdgeInsets.all(24.0),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16.0),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black26,
+                  blurRadius: 10.0,
+                  offset: const Offset(0, 4),
+                ),
+              ],
             ),
-            TextField(
-              controller: _passwordController,
-              decoration: const InputDecoration(labelText: "Password"),
-              obscureText: true,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  "Login",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black,
+                  ),
+                ),
+                const SizedBox(height: 20.0),
+
+                TextField(
+                  controller: _emailController,
+                  decoration: const InputDecoration(labelText: "Email"),
+                ),
+                const SizedBox(height: 16.0),
+
+                TextField(
+                  controller: _passwordController,
+                  decoration: const InputDecoration(labelText: "Password"),
+                  obscureText: true,
+                ),
+                const SizedBox(height: 16.0),
+
+                if (_loading)
+                  const CircularProgressIndicator()
+                else
+                  ElevatedButton(
+                    onPressed: _login,
+                    child: const Text("Login"),
+                  ),
+                const SizedBox(height: 8.0),
+
+                if (_errorMessage.isNotEmpty)
+                  Text(
+                    _errorMessage,
+                    style: const TextStyle(color: Colors.red),
+                  ),
+                const SizedBox(height: 8.0),
+
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const RegisterPage()),
+                    );
+                  },
+                  child: const Text("Don't have an account? Register"),
+                ),
+              ],
             ),
-            const SizedBox(height: 16.0),
-            if (_loading)
-              const CircularProgressIndicator()
-            else
-              ElevatedButton(
-                onPressed: _login,
-                child: const Text("Login"),
-              ),
-            const SizedBox(height: 8.0),
-            if (_errorMessage.isNotEmpty)
-              Text(
-                _errorMessage,
-                style: const TextStyle(color: Colors.red),
-              ),
-            TextButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const RegisterPage()),
-                );
-              },
-              child: const Text("Don't have an account? Register"),
-            ),
-          ],
+          ),
         ),
       ),
     );

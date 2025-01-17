@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_aplication/services/auth_service.dart';
 import 'package:intl/intl.dart';
+import 'package:country_picker/country_picker.dart';
 
 class RegisterPage extends StatefulWidget {
   const RegisterPage({super.key});
@@ -34,7 +35,8 @@ class _RegisterPageState extends State<RegisterPage> {
     if (picked != null && picked != _selectedDate) {
       setState(() {
         _selectedDate = picked;
-        _birthDateController.text = DateFormat('yyyy-MM-dd').format(_selectedDate!);
+        _birthDateController.text =
+            DateFormat('yyyy-MM-dd').format(_selectedDate!);
       });
     }
   }
@@ -71,9 +73,9 @@ class _RegisterPageState extends State<RegisterPage> {
       } catch (e) {
         if (mounted) {
           setState(() {
-            // Check if the error contains "Email already registered"
             if (e.toString().contains("Email already registered")) {
-              _errorMessage = 'The email is already registered. Please use a different email.';
+              _errorMessage =
+                  'The email is already registered. Please use a different email.';
             } else {
               _errorMessage = 'An error occurred: $e';
             }
@@ -89,114 +91,172 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
+  // Function to pick a country using the CountryPicker
+  void _selectCountry() {
+    showCountryPicker(
+      context: context,
+      showPhoneCode: false,
+      onSelect: (Country country) {
+        setState(() {
+          _countryController.text = country.name;
+        });
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Register")),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              // Email field with validation
-              TextFormField(
-                controller: _emailController,
-                decoration: const InputDecoration(labelText: "Email"),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Email is required';
-                  } else if (!RegExp(r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$").hasMatch(value)) {
-                    return 'Please enter a valid email address';
-                  }
-                  return null;
-                },
-              ),
-              // Password field with validation
-              TextFormField(
-                controller: _passwordController,
-                decoration: const InputDecoration(labelText: "Password"),
-                obscureText: true,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Password is required';
-                  } else if (value.length < 3 || value.length > 10) {
-                    return 'Password must be between 3 and 10 characters';
-                  }
-                  return null;
-                },
-              ),
-              // First Name field with validation
-              TextFormField(
-                controller: _firstNameController,
-                decoration: const InputDecoration(labelText: "First Name"),
-                maxLength: 30,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'First Name is required';
-                  }
-                  return null;
-                },
-              ),
-              // Last Name field with validation
-              TextFormField(
-                controller: _lastNameController,
-                decoration: const InputDecoration(labelText: "Last Name"),
-                maxLength: 30,
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Last Name is required';
-                  }
-                  return null;
-                },
-              ),
-              // Birth Date field with date picker
-              GestureDetector(
-                onTap: () => _selectDate(context),
-                child: AbsorbPointer(
-                  child: TextFormField(
-                    controller: _birthDateController,
-                    decoration: const InputDecoration(labelText: "Birth Date"),
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return 'Birth Date is required';
-                      }
-                      return null;
-                    },
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
+      body: SingleChildScrollView(
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.only(top: 50.0, left: 16.0, right: 16.0),
+            child: Container(
+              width: MediaQuery.of(context).size.width > 600
+                  ? 500
+                  : MediaQuery.of(context).size.width * 0.8,
+              padding: const EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(16.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10.0,
+                    offset: const Offset(0, 4),
                   ),
-                ),
+                ],
               ),
-              // Country field (optional)
-              TextFormField(
-                controller: _countryController,
-                decoration: const InputDecoration(labelText: "Country (Optional)"),
-                maxLength: 30,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Register",
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+                  ),
+                  const SizedBox(height: 20.0),
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        TextFormField(
+                          controller: _emailController,
+                          decoration: const InputDecoration(labelText: "Email"),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Email is required';
+                            } else if (!RegExp(
+                                    r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
+                                .hasMatch(value)) {
+                              return 'Please enter a valid email address';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          controller: _passwordController,
+                          decoration:
+                              const InputDecoration(labelText: "Password"),
+                          obscureText: true,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Password is required';
+                            } else if (value.length < 3 || value.length > 10) {
+                              return 'Password must be between 3 and 10 characters';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          controller: _firstNameController,
+                          decoration:
+                              const InputDecoration(labelText: "First Name"),
+                          maxLength: 30,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'First Name is required';
+                            }
+                            return null;
+                          },
+                        ),
+                        TextFormField(
+                          controller: _lastNameController,
+                          decoration:
+                              const InputDecoration(labelText: "Last Name"),
+                          maxLength: 30,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Last Name is required';
+                            }
+                            return null;
+                          },
+                        ),
+                        GestureDetector(
+                          onTap: () => _selectDate(context),
+                          child: AbsorbPointer(
+                            child: TextFormField(
+                              controller: _birthDateController,
+                              decoration: const InputDecoration(
+                                  labelText: "Birth Date"),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Birth Date is required';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                        GestureDetector(
+                          onTap: _selectCountry,
+                          child: AbsorbPointer(
+                            child: TextFormField(
+                              controller: _countryController,
+                              decoration:
+                                  const InputDecoration(labelText: "Country"),
+                              validator: (value) {
+                                if (value == null || value.isEmpty) {
+                                  return 'Country is required';
+                                }
+                                return null;
+                              },
+                            ),
+                          ),
+                        ),
+                        const SizedBox(height: 16.0),
+                        if (_loading)
+                          const CircularProgressIndicator()
+                        else
+                          ElevatedButton(
+                            onPressed: _register,
+                            child: const Text("Register"),
+                          ),
+                        const SizedBox(height: 8.0),
+                        if (_errorMessage.isNotEmpty)
+                          Text(
+                            _errorMessage,
+                            style: const TextStyle(color: Colors.red),
+                          ),
+                        TextButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text("Already have an account? Login"),
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
               ),
-              const SizedBox(height: 16.0),
-              // Display loading indicator or the register button
-              if (_loading)
-                const CircularProgressIndicator()
-              else
-                ElevatedButton(
-                  onPressed: _register,
-                  child: const Text("Register"),
-                ),
-              const SizedBox(height: 8.0),
-              // Error message display
-              if (_errorMessage.isNotEmpty)
-                Text(
-                  _errorMessage,
-                  style: const TextStyle(color: Colors.red),
-                ),
-              // Login redirect link
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("Already have an account? Login"),
-              ),
-            ],
+            ),
           ),
         ),
       ),

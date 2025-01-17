@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_aplication/pages/edit_dog_page.dart';
 import 'package:frontend_aplication/services/user_service.dart';
-import 'package:frontend_aplication/models/user.dart';
+import 'package:frontend_aplication/models/user.dart'; 
 import 'package:frontend_aplication/models/dog.dart';
 import 'package:frontend_aplication/services/auth_service.dart';
-import 'package:frontend_aplication/pages/login_page.dart';
-import 'package:frontend_aplication/pages/edit_profile_page.dart';
-import 'package:intl/intl.dart';
+import 'package:frontend_aplication/pages/login_page.dart'; 
+import 'package:frontend_aplication/pages/edit_profile_page.dart'; 
+import 'package:intl/intl.dart'; 
 
 class ProfilePage extends StatefulWidget {
-  const ProfilePage({super.key});
+  const ProfilePage({Key? key}) : super(key: key);
 
   @override
   ProfilePageState createState() => ProfilePageState();
@@ -24,19 +24,17 @@ class ProfilePageState extends State<ProfilePage> {
   @override
   void initState() {
     super.initState();
-    _checkAuthStatus();
+    _checkAuthStatus(); 
     _fetchProfileData();
   }
 
   // Function to format the date
   String formatDate(String dateStr) {
     try {
-      print("Fecha recibida: $dateStr");
-      final DateFormat inputFormat =
-          DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
+      final DateFormat inputFormat = DateFormat("EEE, dd MMM yyyy HH:mm:ss 'GMT'");
       final DateFormat outputFormat = DateFormat("yyyy-MM-dd");
       final date = inputFormat.parse(dateStr);
-      return outputFormat.format(date);
+      return outputFormat.format(date); 
     } catch (e) {
       return "Invalid date: $e";
     }
@@ -46,7 +44,7 @@ class ProfilePageState extends State<ProfilePage> {
   Future<void> _checkAuthStatus() async {
     final token = await AuthService.getToken();
     if (token == null) {
-      if (mounted) {
+      if (mounted) { 
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -76,7 +74,7 @@ class ProfilePageState extends State<ProfilePage> {
   // Logout session
   Future<void> _logout() async {
     await AuthService.logout();
-    if (mounted) {
+    if (mounted) { 
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const LoginPage()),
@@ -84,125 +82,247 @@ class ProfilePageState extends State<ProfilePage> {
     }
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Profile"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: () async {
-              if (_user != null) {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => EditProfilePage(user: _user!),
-                  ),
-                );
-
-                // Refresh profile data if updated
-                if (result == true) {
-                  _fetchProfileData();
-                }
-              }
-            },
-          ),
-          IconButton(
-            icon: const Icon(Icons.exit_to_app),
-            onPressed: _logout,
-          ),
-        ],
-      ),
-      body: _loading
-          ? const Center(child: CircularProgressIndicator())
-          : _errorMessage.isNotEmpty
-              ? Center(
-                  child: Text(
-                    _errorMessage,
-                    style: const TextStyle(color: Colors.red),
-                  ),
-                )
-              : Column(
-                  children: [
-                    _user != null
-                        ? ListTile(
-                            title:
-                                Text('${_user!.firstName} ${_user!.lastName}'),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(_user!.email),
-                                Text(_user!.country ?? " "),
-                                Text(formatDate(_user!.birthDate ?? " "))
-                              ],
-                            ),
-                          )
-                        : const Text('No user data available'),
-                    const Divider(),
-                    Expanded(
-                      child: _dogs.isEmpty
-                          ? Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text('No dogs registered'),
-                                ElevatedButton(
-                                  onPressed: () async {
-                                    final result = await Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditDogPage(),
-                                      ),
-                                    );
-
-                                    // If a dog was added, refresh the list
-                                    if (result == true) {
-                                      _fetchProfileData();
-                                    }
-                                  },
-                                  child: const Text('Add a Dog'),
-                                ),
-                              ],
-                            )
-                          : ListView.builder(
-                              itemCount: _dogs.length,
-                              itemBuilder: (context, index) {
-                                final dog = _dogs[index];
-                                return ListTile(
-                                  title: Text(dog.name),
-                                  subtitle: Text(
-                                      '${dog.breed}, ${dog.age} years old'),
-                                  leading: dog.imageUrl.isNotEmpty == true
-                                      ? Image.network(dog.imageUrl)
-                                      : const Icon(
-                                          Icons.image,
-                                          size: 50.0,
-                                          color: Colors.grey,
-                                        ),
-                                  trailing: IconButton(
-                                    icon: const Icon(Icons.edit),
-                                    onPressed: () async {
-                                      // Navigate to the dog edit page
-                                      final result = await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              EditDogPage(dog: dog),
-                                        ),
-                                      );
-
-                                      // Refresh data if any update was made
-                                      if (result == true) {
-                                        _fetchProfileData();
-                                      }
-                                    },
-                                  ),
-                                );
-                              },
-                            ),
-                    ),
-                  ],
+ @override
+Widget build(BuildContext context) {
+  return Scaffold(
+    appBar: AppBar(
+      actions: [
+        IconButton(
+          icon: const Icon(Icons.exit_to_app),
+          onPressed: _logout,
+        ),
+      ],
+    ),
+    body: _loading
+        ? const Center(child: CircularProgressIndicator())
+        : _errorMessage.isNotEmpty
+            ? Center(
+                child: Text(
+                  _errorMessage,
+                  style: const TextStyle(color: Colors.red),
                 ),
-    );
-  }
+              )
+            : SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      bool isSmallScreen = constraints.maxWidth < 600;
+
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Center(
+                            child: ConstrainedBox(
+                              constraints: BoxConstraints(maxWidth: 400),
+                              child: Card(
+                                elevation: 5,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        '${_user!.firstName} ${_user!.lastName}',
+                                        style: TextStyle(
+                                          fontSize: 24,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black87,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        _user!.email,
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        _user!.country ?? "No country info",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 8),
+                                      Text(
+                                        formatDate(_user!.birthDate ?? " "),
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.grey[600],
+                                        ),
+                                      ),
+                                      const SizedBox(height: 16),
+                                      ElevatedButton(
+                                        onPressed: () async {
+                                          if (_user != null) {
+                                            final result = await Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => EditProfilePage(user: _user!),
+                                              ),
+                                            );
+
+                                            // Refresh profile data if updated
+                                            if (result == true) {
+                                              _fetchProfileData();
+                                            }
+                                          }
+                                        },
+                                        child: const Text("Edit Profile"),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          const SizedBox(height: 20),
+                          // Dog info and editing section
+                          isSmallScreen
+                              ? Column(
+                                  children: [
+                                    _buildDogSection(),
+                                  ],
+                                )
+                              : Row(
+                                  children: [
+                                    Expanded(child: _buildDogSection()),
+                                  ],
+                                ),
+                        ],
+                      );
+                    },
+                  ),
+                ),
+              ),
+  );
+}
+
+
+  Widget _buildDogSection() {
+  return Center(
+    child: ConstrainedBox(
+      constraints: BoxConstraints(maxWidth: 225),
+      child: Card(
+        elevation: 5,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        margin: const EdgeInsets.only(bottom: 20),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                child: const Text(
+                  'Doggy',
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+              _dogs.isEmpty
+                  ? Column(
+                      children: [
+                        const Text(
+                          'No dogs registered',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.grey,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                        ElevatedButton(
+                          onPressed: () async {
+                            final result = await Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditDogPage(),
+                              ),
+                            );
+
+                            // If a dog was added, refresh the list
+                            if (result == true) {
+                              _fetchProfileData();
+                            }
+                          },
+                          child: const Text('Add a Dog'),
+                        ),
+                      ],
+                    )
+                  : Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: _dogs.map((dog) {
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              dog.name,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.grey,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              dog.breed,
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              'Age: ${dog.age}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: Colors.grey,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 8),
+                            dog.imageUrl.isNotEmpty
+                                ? Image.network(dog.imageUrl)
+                                : const Icon(Icons.pets, size: 50),
+                            const SizedBox(height: 16),
+                            Center(
+                              child: ElevatedButton(
+                                onPressed: () async {
+                                  final result = await Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditDogPage(dog: dog),
+                                    ),
+                                  );
+
+                                  if (result == true) {
+                                    _fetchProfileData();
+                                  }
+                                },
+                                child: const Text('Edit Dog Info'),
+                              ),
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    ),
+            ],
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
 }
