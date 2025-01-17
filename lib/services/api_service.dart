@@ -10,11 +10,11 @@ import 'package:frontend_aplication/services/auth_service.dart';
 class ApiService {
   // Method to send an image file to the server
   static Future<Map<String, dynamic>> sendImageToServer(File image) async {
-    final apiUrl = dotenv.env['API_URL'];
+    final apiUrl = dotenv.env['BASE_URL'];
     if (apiUrl == null || apiUrl.isEmpty) {
       throw Exception("API URL is not defined in environment variables.");
     }
-    final url = Uri.parse(apiUrl);
+    final url = Uri.parse('$apiUrl/predict');
 
     final token = await AuthService.getToken();
     final mimeType = _getMimeType(image.path);
@@ -48,11 +48,11 @@ class ApiService {
 
   // Method to send image bytes to the server
   static Future<Map<String, dynamic>> sendImageBytesToServer(Uint8List bytes) async {
-    final apiUrl = dotenv.env['API_URL'];
+    final apiUrl = dotenv.env['BASE_URL'];
     if (apiUrl == null || apiUrl.isEmpty) {
       throw Exception("API URL is not defined in environment variables.");
     }
-    final url = Uri.parse(apiUrl);
+    final url = Uri.parse('$apiUrl/predict');
 
     final token = await AuthService.getToken();
     final mimeType = lookupMimeType('', headerBytes: bytes);
