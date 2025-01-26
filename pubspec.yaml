@@ -9,6 +9,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  flutter_svg: ^2.0.0
+  google_fonts: ^6.2.1
   country_picker: ^2.0.27
   english_words: ^4.0.0
   provider: ^6.0.0
@@ -35,3 +37,7 @@ flutter:
   assets:
     - assets/icons/
     - assets/images/profile.jpg
+    - assets/images/background.jpg
+    - assets/images/title.jpg
+    - assets/images/background_svg.svg
+    - assets/images/Untitled.svg
