@@ -15,7 +15,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   final TextEditingController _passwordController = TextEditingController();
   bool _loading = false;
   String _errorMessage = '';
-  bool _passwordVisible = false; // Estado para la visibilidad de la contraseña
+  bool _passwordVisible = false;
 
   @override
   void initState() {
@@ -116,8 +116,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             const SizedBox(height: 16.0),
             TextField(
               controller: _passwordController,
-              obscureText:
-                  !_passwordVisible, // Controlamos si la contraseña es visible
+              obscureText: !_passwordVisible,
               decoration: InputDecoration(
                 labelText: "Password",
                 suffixIcon: IconButton(
@@ -126,8 +125,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   ),
                   onPressed: () {
                     setState(() {
-                      _passwordVisible =
-                          !_passwordVisible; // Alternamos la visibilidad
+                      _passwordVisible = !_passwordVisible;
                     });
                   },
                 ),

@@ -15,12 +15,12 @@ class RegisterPage extends StatelessWidget {
         title: Padding(
           padding: const EdgeInsets.only(bottom: 10.0),
           child: FittedBox(
-            fit: BoxFit.scaleDown, // Asegura que el texto no se corte
+            fit: BoxFit.scaleDown,
             child: Text(
               "DOGGY DETECTIVE",
               style: GoogleFonts.cherryBombOne(
                 fontWeight: FontWeight.bold,
-                fontSize: 60.0, // Puedes ajustar el tamaño inicial aquí
+                fontSize: 60.0,
               ),
             ),
           ),
@@ -36,7 +36,13 @@ class RegisterPage extends StatelessWidget {
             image: AssetImage('assets/images/background.jpg'),
           ),
         ),
-        child: const Center(child: RegisterWidget()), // El widget de registro
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            const SizedBox(height: 25),
+            const Expanded(child: RegisterWidget()),
+          ],
+        ),
       ),
     );
   }

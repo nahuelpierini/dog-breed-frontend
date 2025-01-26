@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:frontend_aplication/models/dog.dart';
-import 'package:frontend_aplication/services/dog_service.dart'; 
+import 'package:frontend_aplication/services/dog_service.dart';
 
 class EditDogPage extends StatefulWidget {
   final Dog? dog;
 
-  const EditDogPage({Key? key, this.dog}) : super(key: key);
+  const EditDogPage({super.key, this.dog});
 
   @override
   EditDogPageState createState() => EditDogPageState();
@@ -74,14 +74,15 @@ class EditDogPageState extends State<EditDogPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
-        title: const Text(''), 
+        title: const Text(''),
       ),
       body: _loading
           ? const Center(child: CircularProgressIndicator())
           : SingleChildScrollView(
               child: Center(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 200.0, left: 16.0, right: 16.0), 
+                  padding: const EdgeInsets.only(
+                      top: 200.0, left: 16.0, right: 16.0),
                   child: Container(
                     width: MediaQuery.of(context).size.width > 600
                         ? 500
@@ -101,16 +102,16 @@ class EditDogPageState extends State<EditDogPage> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                          Center(
-                            child: Text(
-                              widget.dog != null ? 'Edit Dog' : 'Add Dog', 
-                              style: TextStyle(
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+                        Center(
+                          child: Text(
+                            widget.dog != null ? 'Edit Dog' : 'Add Dog',
+                            style: TextStyle(
+                              fontSize: 24.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black,
                             ),
                           ),
+                        ),
                         const SizedBox(height: 20),
                         Form(
                           key: _formKey,
@@ -119,7 +120,8 @@ class EditDogPageState extends State<EditDogPage> {
                             children: [
                               TextFormField(
                                 controller: _nameController,
-                                decoration: const InputDecoration(labelText: 'Name'),
+                                decoration:
+                                    const InputDecoration(labelText: 'Name'),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
                                     return 'Please enter a name';
@@ -129,18 +131,22 @@ class EditDogPageState extends State<EditDogPage> {
                               ),
                               TextFormField(
                                 controller: _breedController,
-                                decoration: const InputDecoration(labelText: 'Breed'),
+                                decoration:
+                                    const InputDecoration(labelText: 'Breed'),
                               ),
                               TextFormField(
                                 controller: _ageController,
-                                decoration: const InputDecoration(labelText: 'Age'),
+                                decoration:
+                                    const InputDecoration(labelText: 'Age'),
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 20),
                               Center(
                                 child: ElevatedButton(
                                   onPressed: _saveDog,
-                                  child: Text(widget.dog != null ? 'Update Dog' : 'Add Dog'),
+                                  child: Text(widget.dog != null
+                                      ? 'Update Dog'
+                                      : 'Add Dog'),
                                 ),
                               ),
                             ],

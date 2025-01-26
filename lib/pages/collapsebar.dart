@@ -4,17 +4,19 @@ import 'package:frontend_aplication/widgets/image_picker_widget.dart';
 import 'package:frontend_aplication/pages/profile_page.dart';
 
 class CollapsingAppbarWithTabsPage extends StatefulWidget {
-  const CollapsingAppbarWithTabsPage({Key? key}) : super(key: key);
+  const CollapsingAppbarWithTabsPage({super.key});
 
   @override
-  CollapsingAppbarWithTabsPageState createState() => CollapsingAppbarWithTabsPageState();
+  CollapsingAppbarWithTabsPageState createState() =>
+      CollapsingAppbarWithTabsPageState();
 }
 
-class CollapsingAppbarWithTabsPageState extends State<CollapsingAppbarWithTabsPage> {
+class CollapsingAppbarWithTabsPageState
+    extends State<CollapsingAppbarWithTabsPage> {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3, 
+      length: 3,
       child: Scaffold(
         body: NestedScrollView(
           headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
@@ -24,9 +26,9 @@ class CollapsingAppbarWithTabsPageState extends State<CollapsingAppbarWithTabsPa
           },
           body: TabBarView(
             children: [
-              const ImagePickerWidget(), 
+              const ImagePickerWidget(),
               Center(child: Text("Breeds")),
-              const ProfilePage(), 
+              const ProfilePage(),
             ],
           ),
         ),

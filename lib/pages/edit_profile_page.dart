@@ -7,7 +7,7 @@ import 'package:country_picker/country_picker.dart';
 class EditProfilePage extends StatefulWidget {
   final User user;
 
-  const EditProfilePage({Key? key, required this.user}) : super(key: key);
+  const EditProfilePage({super.key, required this.user});
 
   @override
   EditProfilePageState createState() => EditProfilePageState();
