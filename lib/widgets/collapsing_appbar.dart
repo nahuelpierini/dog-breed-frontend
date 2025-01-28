@@ -37,7 +37,7 @@ class CollapsingAppBar extends StatelessWidget {
   /// Builds the background for the app bar.
   Widget _buildAppBarBackground() {
     return Image.asset(
-      'assets/images/back2.png',
+      'assets/images/background_appbar.png',
       fit: BoxFit.cover,
     );
   }
