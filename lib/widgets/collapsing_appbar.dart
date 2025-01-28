@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 /// A custom collapsing app bar with a flexible space and a tab bar.
 class CollapsingAppBar extends StatelessWidget {
@@ -7,7 +8,7 @@ class CollapsingAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      expandedHeight: 220.0, // Configurable expanded height
+      expandedHeight: 220.0,
       floating: false,
       pinned: true,
       stretch: true,
@@ -24,34 +25,41 @@ class CollapsingAppBar extends StatelessWidget {
 
   /// Builds the title for the app bar.
   Widget _buildAppBarTitle() {
-    return const Text(
-      "Dog Breed Detector",
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 16.0,
+    return Text(
+      "Doggy Detective",
+      style: GoogleFonts.cherryBombOne(
+        fontWeight: FontWeight.bold,
+        fontSize: 30.0,
       ),
     );
   }
 
   /// Builds the background for the app bar.
   Widget _buildAppBarBackground() {
-    return Image.network(
-      "https://images.pexels.com/photos/247522/pexels-photo-247522.jpeg",
+    return Image.asset(
+      'assets/images/back2.png',
       fit: BoxFit.cover,
     );
   }
 
   /// Builds the tab bar with its tabs.
   PreferredSizeWidget _buildTabBar() {
-    return const TabBar(
-      indicatorSize: TabBarIndicatorSize.label,
-      labelColor: Colors.purple,
-      unselectedLabelColor: Colors.grey,
-      tabs: [
-        Tab(icon: Icon(Icons.home_rounded), text: "Home"),
-        Tab(icon: Icon(Icons.shopping_bag_rounded), text: "Breeds"),
-        Tab(icon: Icon(Icons.person), text: "Profile"),
-      ],
+    return PreferredSize(
+      preferredSize: const Size.fromHeight(70.0),
+      child: Container(
+        color: const Color.fromARGB(255, 122, 25, 106),
+        height: 60.0,
+        child: const TabBar(
+          indicatorSize: TabBarIndicatorSize.label,
+          labelColor: Colors.white,
+          unselectedLabelColor: Color.fromARGB(173, 158, 158, 158),
+          tabs: [
+            Tab(icon: Icon(Icons.home_rounded), text: "Detective"),
+            Tab(icon: Icon(Icons.shopping_bag_rounded), text: "Breeds"),
+            Tab(icon: Icon(Icons.person), text: "Profile"),
+          ],
+        ),
+      ),
     );
   }
 }
