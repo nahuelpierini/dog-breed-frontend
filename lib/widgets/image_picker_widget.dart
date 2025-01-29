@@ -43,7 +43,15 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
           ElevatedButton.icon(
             onPressed: _pickImage,
             icon: const Icon(Icons.camera_alt),
-            label: const Text("Tomar Foto o Cargar Imagen"),
+            label: LayoutBuilder(
+              builder: (context, constraints) {
+                double fontSize = constraints.maxWidth > 200 ? 16 : 12;
+                return Text(
+                  "Tomar Foto o Cargar Imagen",
+                  style: TextStyle(fontSize: fontSize),
+                );
+              },
+            ),
           ),
           const SizedBox(height: 16),
           _buildImagePreview(),
@@ -74,8 +82,12 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
       return Container(
         width: 150,
         height: 150,
-        color: Colors.grey[300],
-        child: const Icon(Icons.image, size: 50),
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/images/dog_shadow.png'),
+            fit: BoxFit.cover,
+          ),
+        ),
       );
     }
   }
@@ -92,7 +104,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            'Breed: $_breed',
+            _breed,
             style: const TextStyle(fontSize: 14),
           ),
           const SizedBox(height: 8),
@@ -101,7 +113,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
           ),
           Text(
-            'Confidence: $_confidence',
+            _confidence,
             style: const TextStyle(fontSize: 14),
           ),
         ],
