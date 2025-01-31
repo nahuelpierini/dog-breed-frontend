@@ -84,7 +84,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
         height: 150,
         decoration: BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/dog_shadow.png'),
+            image: AssetImage('assets/images/dog_shadow.jpg'),
             fit: BoxFit.cover,
           ),
         ),

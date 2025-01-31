@@ -35,6 +35,5 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/background.jpg
-    - assets/images/background_appbar.png
-    - assets/images/dog_shadow.png
+    - assets/images/
+    - assets/breeds/

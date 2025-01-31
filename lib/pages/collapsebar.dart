@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend_aplication/widgets/collapsing_appbar.dart';
 import 'package:frontend_aplication/widgets/image_picker_widget.dart';
 import 'package:frontend_aplication/pages/profile_page.dart';
+import 'package:frontend_aplication/pages/breeds_page.dart';
 
 class CollapsingAppbarWithTabsPage extends StatefulWidget {
   const CollapsingAppbarWithTabsPage({super.key});
@@ -27,7 +28,7 @@ class CollapsingAppbarWithTabsPageState
           body: TabBarView(
             children: [
               const ImagePickerWidget(),
-              Center(child: Text("Breeds")),
+              BreedsPage(),
               const ProfilePage(),
             ],
           ),
