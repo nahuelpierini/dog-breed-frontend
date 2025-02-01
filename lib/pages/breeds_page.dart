@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'dart:convert';
+import 'package:flutter/services.dart' show rootBundle;
 import 'package:frontend_aplication/widgets/breed_item_widget.dart';
 
 class BreedsPage extends StatefulWidget {
+  @override
+  BreedsPageState createState() => BreedsPageState();
+}
+
+class BreedsPageState extends State<BreedsPage> {
   final Map<int, String> breedNames = {
     0: "afghan_hound",
     1: "beagle",
@@ -28,65 +35,96 @@ class BreedsPage extends StatefulWidget {
     22: "whippet",
   };
 
-  BreedsPage({super.key});
-
-  @override
-  BreedsPageState createState() => BreedsPageState();
-}
-
-class BreedsPageState extends State<BreedsPage> {
   Map<int, String> confidenceMap = {
     0: '95.0',
     1: '55.0',
-    2: '65.0',
+    2: '95.0',
     3: '95.0',
-    4: '75.0',
-    5: '55.0',
+    4: '55.0',
+    5: '95.0',
     6: '55.0',
-    7: '65.0',
-    8: '65.0',
-    9: '55.0',
-    10: '55.0',
+    7: '55.0',
+    8: '55.0',
+    9: '95.0',
+    10: '95.0',
     11: '95.0',
-    12: '95.0',
-    13: '95.0',
-    14: '95.0',
+    12: '55.0',
+    13: '55.0',
+    14: '55.0',
     15: '55.0',
     16: '95.0',
-    17: '55.0',
+    17: '95.0',
     18: '55.0',
     19: '55.0',
     20: '95.0',
     21: '95.0',
-    22: '15.0'
-  }; // Almacena los porcentajes de acierto como String
+    22: '95.0',
+  };
 
-  void updateConfidenceMap(Map<int, String> newConfidenceMap) {
-    setState(() {
-      confidenceMap = newConfidenceMap;
-    });
+  late Future<Map<String, dynamic>> dogInfo;
+
+  @override
+  void initState() {
+    super.initState();
+    dogInfo = loadDogInfo();
+  }
+
+  Future<Map<String, dynamic>> loadDogInfo() async {
+    String jsonString =
+        await rootBundle.loadString('assets/data/dog_info.json');
+    return json.decode(jsonString);
   }
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      padding: const EdgeInsets.all(10),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3, // Número de columnas
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
-      itemCount: widget.breedNames.length,
-      itemBuilder: (context, index) {
-        String breedName = widget.breedNames[index]!;
-        String imagePath =
-            'assets/breeds/$breedName.jpg'; // Usamos el nombre de la raza en la ruta
+    return FutureBuilder<Map<String, dynamic>>(
+      future: dogInfo,
+      builder: (context, snapshot) {
+        if (!snapshot.hasData) {
+          return Center(child: CircularProgressIndicator());
+        }
 
-        double accuracy = double.tryParse(confidenceMap[index] ?? '0.0') ??
-            0.0; // Conversión segura a double
-        return BreedItemWidget(
-          imagePath: imagePath,
-          accuracy: accuracy,
+        // Usamos LayoutBuilder para ajustar el número de columnas
+        return LayoutBuilder(
+          builder: (context, constraints) {
+            // Determinamos el número de columnas según el ancho de la pantalla
+            int crossAxisCount = 4; // Default para pantallas grandes
+
+            if (constraints.maxWidth < 600) {
+              crossAxisCount = 2; // 1 columna para pantallas pequeñas
+            } else if (constraints.maxWidth < 900) {
+              crossAxisCount = 3; // 2 columnas para pantallas medianas
+            }
+
+            return GridView.builder(
+              padding: EdgeInsets.all(10),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: crossAxisCount,
+                crossAxisSpacing: 20,
+                mainAxisSpacing: 20,
+              ),
+              itemCount: breedNames.length,
+              itemBuilder: (context, index) {
+                String breedName = breedNames[index]!;
+                String imagePath =
+                    'assets/breeds/${breedName.toLowerCase().replaceAll(" ", "_")}.jpg';
+                String confidence = confidenceMap[index] ?? '0.0';
+
+                // Ajustar el tamaño de la imagen para que no ocupe toda la celda
+                return Padding(
+                  padding: const EdgeInsets.all(
+                      8.0), // Ajustar el padding para hacer las celdas más pequeñas
+                  child: BreedItemWidget(
+                    imagePath: imagePath,
+                    breedName: breedName,
+                    dogInfo: snapshot.data![breedName],
+                    confidence: confidence,
+                    imageWidth: 20, // Ajustar el ancho de las imágenes
+                  ),
+                );
+              },
+            );
+          },
         );
       },
     );

@@ -1,0 +1,232 @@
+{
+  "afghan_hound": {
+    "raza": "Lebrel Afgano",
+    "temperamento": "Reservado, Digno, Payaso, Alegre, Independiente",
+    "colores": "Negro, Crema, Rojo",
+    "origen": "Afganistán",
+    "vida": "12-14 años",
+    "altura": "Macho: 68–74 cm, Hembra: 60–69 cm",
+    "peso": "Macho: 26–34 kg, Hembra: 26–34 kg",
+    "info": "El lebrel afgano es una de las razas más antiguas y elegantes, originaria de Afganistán, criada para la caza en terrenos montañosos. Su distintivo pelaje largo y sedoso requiere cuidados constantes para evitar enredos. Con una personalidad independiente y reservada, este perro es leal pero no excesivamente afectuoso, lo que puede dificultar su entrenamiento. Es activo, rápido y resistente, disfrutando del ejercicio regular, aunque también puede ser tranquilo en casa. Aunque generalmente saludable, el lebrel afgano puede ser propenso a problemas de caderas y ojos, por lo que es importante realizar pruebas de salud en los criadores."
+  },
+  "beagle": {
+    "raza": "Beagle",
+    "temperamento": "Amistoso, Curioso, Inteligente, Apacible, Amigable",
+    "colores": "Limón y blanco, Marrón y blanco, Tricolor, Blanco y tostado, Blanco y naranja, Chocolate tricolor, Rojo y blanco",
+    "origen": "Reino Unido",
+    "vida": "12-15 años",
+    "altura": "Macho: 36–41 cm, Hembra: 33–38 cm",
+    "peso": "Macho: 10–14 kg, Hembra: 9–10 kg",
+    "info": "El Beagle es un perro pequeño a mediano, conocido por su energía, inteligencia y agudo sentido del olfato. Originario de Inglaterra, fue criado para la caza de presas pequeñas, lo que lo convierte en uno de los mejores rastreadores. Su tamaño compacto, cuerpo robusto y orejas largas le dan un aspecto simpático. Es un perro extrovertido, amigable y sociable, ideal para la vida familiar, aunque necesita supervisión debido a su instinto de caza. Es algo obstinado, lo que puede hacer que su entrenamiento sea un reto, pero responde bien al refuerzo positivo. Requiere ejercicio regular y estimulación mental, y puede ser propenso a problemas de salud como displasia de cadera, infecciones de oído y problemas de peso."
+  },
+  "bernese_mountain_dog": {
+    "raza": "Boyero de Berna",
+    "temperamento": " Cariñoso, Inteligente, Leal, Fiel",
+    "colores": "Negro tricolor",
+    "origen": "Suiza",
+    "vida": "7 – 10 años",
+    "altura": "Macho: 64–70 cm, Hembra: 58–66 cm",
+    "peso": "Macho: 38–50 kg, Hembra: 36–48 kg",
+    "info": "El Boyero de Berna, originario de Suiza, es un perro grande y robusto, conocido por su carácter amable y su gran tamaño. Su pelaje largo, denso y tricolor le proporciona protección contra el clima frío, pero requiere cuidados regulares. Es un perro extremadamente amigable, tranquilo y leal, ideal para la familia, ya que se lleva bien con niños, otros perros y animales pequeños. Aunque es protector, no es agresivo. Es inteligente y, con paciencia, responde bien al entrenamiento. A pesar de ser una raza robusta, puede sufrir de displasia de cadera, problemas cardíacos y algunos tipos de cáncer, por lo que se recomienda un control de salud regular. Su esperanza de vida es de 7 a 10 años."
+  },
+  "border_collie": {
+    "raza": "Border Collie",
+    "temperamento": "Inteligente, Tenaz, Entusiasta, Receptivo, Leal, Atlético, Energético, Alerta",
+    "colores": "Negro, Blanco, Marrón, Rojo mirlo, Azul mirlo",
+    "origen": "Reino Unido, Escocia, Inglaterra, Irlanda, Gales",
+    "vida": "12-15 años",
+    "altura": "Macho: 48–56 cm, Hembra: 46–53 cm",
+    "peso": "Macho: 14–20 kg, Hembra: 12–19 kg",
+    "info": "El Border Collie es una de las razas más inteligentes y enérgicas, originaria de la región fronteriza entre Escocia e Inglaterra. Criado como perro de pastoreo, es reconocido por su agilidad, enfoque y capacidad de aprendizaje rápido. Su apariencia es atlética y bien equilibrada, con pelaje de longitud media o corta, generalmente en colores como negro y blanco. Es altamente inteligente y versátil, destacando en deportes caninos y tareas de pastoreo. Requiere estimulación mental constante y mucho ejercicio para evitar comportamientos destructivos. Es leal, afectuoso y protector con su familia, pero reservado con los extraños. Aunque generalmente saludable, puede ser propenso a displasia de cadera, epilepsia y problemas oculares, por lo que es importante contar con criadores responsables."
+  },
+  "boxer": {
+    "raza": "boxer",
+    "temperamento": " Inteligente, Leal, Amigable, Energético, Alegre, Devoto, Intrépido, Confiado, Calmado, Juguetón, Valiente",
+    "colores": "Blanco, Pelaje atigrado, pardo claro",
+    "origen": "Alemania",
+    "vida": "10 a 12 años",
+    "altura": "Hembra: 53–60 cm, Macho: 57–63 cm",
+    "peso": "Hembra: 25–29 kg, Macho: 27–32 kg",
+    "info": "El Boxer es un perro de tamaño mediano a grande, originario de Alemania, conocido por su energía, lealtad y carácter juguetón. Criado inicialmente para la caza de animales grandes, hoy en día es un excelente perro de compañía y trabajo. Tiene un cuerpo robusto y atlético, con pelaje corto en tonos como fawn o atigrado. Es extrovertido, enérgico, afectuoso y protector con su familia, lo que lo convierte en un buen perro guardián. Aunque tiene un carácter protector, es amigable con los niños y otros animales. Su naturaleza juguetona se mantiene incluso en la adultez, lo que le da un aire juvenil."
+  },
+  "brittany_spaniel": {
+    "raza": "Bretón",
+    "temperamento": "Amistoso, activo, enérgico, inteligente, leal, sociable",
+    "colores": "Tricolor, bicolor (naranja y blanco, negro y blanco, hígado y blanco)",
+    "origen": "Francia",
+    "vida": "12-14 años",
+    "altura": "48–51 cm",
+    "peso": "14–18 kg",
+    "info": "El Bretón es una raza energética y amigable, conocida por su habilidad como perro de caza. Es un perro inteligente, fácil de entrenar y excelente para familias activas. Le encanta correr y participar en actividades al aire libre. Es sociable con niños y otros animales, y es ideal para personas que practiquen deportes caninos o busquen un compañero dinámico."
+  },
+  "chihuahua": {
+    "raza": "Chihuahua",
+    "temperamento": "Valiente, leal, alerta, amistoso, extrovertido, curioso",
+    "colores": "Tricolor, bicolor, chocolate, negro, crema, blanco, dorado",
+    "origen": "México",
+    "vida": "12-20 años",
+    "altura": "15–23 cm",
+    "peso": "1.5–3 kg",
+    "info": "El Chihuahua es una de las razas más pequeñas, conocida por su valentía y lealtad. A pesar de su tamaño, tiene una gran personalidad y puede ser un excelente perro guardián. Es activo, amigable y se adapta bien a la vida en apartamentos, aunque requiere socialización y entrenamiento adecuado para evitar problemas de comportamiento."
+  },
+  "chow": {
+    "raza": "Chow Chow",
+    "temperamento": "Independiente, leal, reservado, tranquilo, protector, tranquilo",
+    "colores": "Negro, rojo, azul, canela, crema",
+    "origen": "China",
+    "vida": "9-15 años",
+    "altura": "46–56 cm",
+    "peso": "23–34 kg",
+    "info": "El Chow Chow es una raza conocida por su apariencia única, con su melena de león y su lengua azul. Es un perro independiente y reservado, muy leal a su familia. Requiere una socialización temprana y un manejo adecuado debido a su temperamento algo distante. Son tranquilos, pero pueden ser muy protectores con sus seres queridos."
+  },
+  "cocker_spaniel": {
+    "raza": "Cocker",
+    "temperamento": "Amistoso, alegre, afectuoso, activo, sociable, inteligente",
+    "colores": "Negro, dorado, chocolate, blanco, rojo, tricolor",
+    "origen": "Reino Unido",
+    "vida": "12-15 años",
+    "altura": "38–41 cm",
+    "peso": "12–15 kg",
+    "info": "El Cocker es una raza activa y amigable, conocida por su naturaleza alegre y afectuosa. Es un excelente perro de compañía, se lleva bien con los niños y otros animales. Requiere ejercicio regular y es muy inteligente, lo que facilita su adiestramiento. Además, tiene una melena suave que requiere cuidados regulares."
+  },
+  "dachshund": {
+    "raza": "Perro Salchicha",
+    "temperamento": "Valiente, extrovertido, leal, independiente, curioso, amigable",
+    "colores": "Negro, marrón, crema, atigrado, sable",
+    "origen": "Alemania",
+    "vida": "12-16 años",
+    "altura": "20–27 cm",
+    "peso": "3.5–9 kg",
+    "info": "El Perro Salchicha es una raza pequeña pero con gran personalidad. Son conocidos por su valentía, a pesar de su tamaño, y su amor por la caza. Son leales y muy cariñosos con su familia, pero pueden ser algo tercos. Necesitan ejercicio y estimulación mental para mantenerse felices, y se adaptan bien a vivir en apartamentos."
+  },
+  "doberman": {
+    "raza": "Doberman",
+    "temperamento": "Inteligente, leal, valiente, protector, enérgico, confiado",
+    "colores": "Negro, marrón, azul, amarillo",
+    "origen": "Alemania",
+    "vida": "10-12 años",
+    "altura": "Hembra: 63–68 cm, Macho: 68–72 cm",
+    "peso": "Hembra: 27–35 kg, Macho: 40–45 kg",
+    "info": "El Doberman es una raza conocida por su valentía y capacidad de protección, además de ser extremadamente leal a su familia. Es un perro inteligente, activo y de gran energía, ideal para propietarios que practiquen deportes caninos o necesiten un perro guardián. Aunque su naturaleza protectora puede ser dominante, son muy afectuosos y juguetones con sus seres queridos cuando están bien entrenados."
+  },
+  "french_bulldog": {
+    "raza": "Bulldog Francés",
+    "temperamento": "Amistoso, juguetón, leal, adaptable, travieso, afectuoso",
+    "colores": "Atigrado, blanco, negro, leonado, pardo",
+    "origen": "Francia",
+    "vida": "10-12 años",
+    "altura": "30–31 cm",
+    "peso": "8–14 kg",
+    "info": "El Bulldog Francés es una raza pequeña, conocida por su personalidad extrovertida y su característico rostro plano. Son perros leales, cariñosos y muy adaptables, adecuados para vivir en apartamentos. Aunque tienen una naturaleza juguetona, son tranquilos en casa y disfrutan pasar tiempo con su familia. Son muy buenos con los niños y otros animales."
+  },
+  "german_shepherd": {
+    "raza": "Pastor Alemán",
+    "temperamento": "Inteligente, leal, valiente, activo, protector, confiable",
+    "colores": "Negro, fuego, sable, bicolor",
+    "origen": "Alemania",
+    "vida": "9-13 años",
+    "altura": "Hembra: 55–60 cm, Macho: 60–65 cm",
+    "peso": "Hembra: 22–32 kg, Macho: 30–40 kg",
+    "info": "El Pastor Alemán es una de las razas más populares por su inteligencia, lealtad y capacidad de trabajo. Son excelentes perros de trabajo, utilizados en policía, rescate y como perros guías. Tienen una naturaleza protectora, lo que los convierte en excelentes guardianes, pero también son afectuosos con su familia."
+  },
+  "golden_retriever": {
+    "raza": "Golden Retriever",
+    "temperamento": "Amigable, activo, inteligente, leal, paciente, sociable",
+    "colores": "Dorado, crema",
+    "origen": "Reino Unido",
+    "vida": "10-12 años",
+    "altura": "Hembra: 51–56 cm, Macho: 56–61 cm",
+    "peso": "Hembra: 25–32 kg, Macho: 29–34 kg",
+    "info": "El Golden Retriever es conocido por su amabilidad, inteligencia y adaptabilidad. Son excelentes compañeros, ideales para familias, y son buenos con niños y otros animales. Además, son perros de trabajo, comúnmente utilizados como perros guías o en actividades de rescate debido a su naturaleza sociable y su gran capacidad de aprendizaje."
+  },
+  "labrador_retriever": {
+    "raza": "Labrador Retriever",
+    "temperamento": "Amigable, activo, leal, inteligente, sociable",
+    "colores": "Negro, amarillo, chocolate",
+    "origen": "Reino Unido",
+    "vida": "10-12 años",
+    "altura": "Hembra: 54–59 cm, Macho: 56–61 cm",
+    "peso": "Hembra: 25–32 kg, Macho: 29–36 kg",
+    "info": "El Labrador Retriever es una de las razas más populares debido a su amabilidad, inteligencia y energía. Son perros familiares excepcionales, ideales para personas activas, y son excelentes compañeros de trabajo en deportes caninos o como perros guías. Su naturaleza amigable y su capacidad de aprender rápidamente los hacen perfectos para casi cualquier entorno."
+  },
+  "pitbull": {
+    "raza": "Pitbull",
+    "temperamento": "Leal, valiente, activo, extrovertido, confiado",
+    "colores": "Negro, blanco, marrón, atigrado, azul",
+    "origen": "Estados Unidos",
+    "vida": "12-14 años",
+    "altura": "43–48 cm",
+    "peso": "16–30 kg",
+    "info": "El Pitbull es una raza conocida por su valentía y lealtad hacia su familia. Aunque tienen una reputación controversial, son excelentes perros de compañía si son bien entrenados y socializados desde cachorros. Son enérgicos, juguetones y cariñosos, especialmente con sus seres queridos."
+  },
+  "pug": {
+    "raza": "Pug",
+    "temperamento": "Divertido, cariñoso, extrovertido, juguetón, leal",
+    "colores": "Beige, negro, plateado",
+    "origen": "China",
+    "vida": "12-15 años",
+    "altura": "25–30 cm",
+    "peso": "6–9 kg",
+    "info": "El Pug es una raza pequeña conocida por su naturaleza extrovertida y su cara arrugada. Son muy cariñosos, afectuosos y se llevan bien con los niños y otros animales. Aunque no son demasiado activos, disfrutan de la compañía y les encanta ser el centro de atención. Son ideales para vivir en apartamentos."
+  },
+  "rottweiler": {
+    "raza": "Rottweiler",
+    "temperamento": "Valiente, leal, protector, confiado, independiente",
+    "colores": "Negro y fuego",
+    "origen": "Alemania",
+    "vida": "8-10 años",
+    "altura": "Hembra: 56–63 cm, Macho: 61–69 cm",
+    "peso": "Hembra: 35–48 kg, Macho: 50–60 kg",
+    "info": "El Rottweiler es un perro robusto y musculoso conocido por su valentía y su habilidad para proteger a su familia. Aunque tienen una naturaleza dominante, son muy leales y afectuosos con sus seres queridos. Son excelentes perros guardianes y, con un buen entrenamiento, pueden ser maravillosos compañeros."
+  },
+  "saint_bernard": {
+    "raza": "San Bernardo",
+    "temperamento": "Amigable, tranquilo, leal, protector, paciente",
+    "colores": "Rojo y blanco, atigrado",
+    "origen": "Suiza",
+    "vida": "8-10 años",
+    "altura": "Hembra: 70–80 cm, Macho: 70–90 cm",
+    "peso": "Hembra: 54–63 kg, Macho: 64–82 kg",
+    "info": "El San Bernardo es conocido por su tamaño masivo y su naturaleza tranquila y amigable. Fueron originalmente criados para rescatar montañeros en los Alpes suizos. Son perros leales, protectores y pacientes, excelentes para familias grandes. A pesar de su tamaño, son muy gentiles y afectuosos."
+  },
+  "siberian_husky": {
+    "raza": "Husky Siberiano",
+    "temperamento": "Enérgico, inteligente, amigable, independiente, travieso",
+    "colores": "Blanco, negro, gris, rojo, sable",
+    "origen": "Siberia",
+    "vida": "12-15 años",
+    "altura": "Hembra: 50–56 cm, Macho: 54–60 cm",
+    "peso": "Hembra: 16–23 kg, Macho: 20–27 kg",
+    "info": "El Husky Siberiano es una raza conocida por su resistencia, energía y su aspecto lobo. Son perros muy activos y necesitan ejercicio regular. Tienen una personalidad amigable y sociable, pero también son independientes y pueden ser algo tercos. Son adecuados para personas que disfrutan de actividades al aire libre."
+  },
+  "toy_poodle": {
+    "raza": "Caniche Toy",
+    "temperamento": "Inteligente, amigable, leal, activo, curioso",
+    "colores": "Negro, blanco, crema, gris, marrón",
+    "origen": "Francia",
+    "vida": "12-15 años",
+    "altura": "28–35 cm",
+    "peso": "3–6 kg",
+    "info": "El Caniche Toy es una raza pequeña y muy inteligente, conocida por su habilidad para aprender rápidamente y su naturaleza amigable. Son ideales para apartamentos y personas activas, ya que disfrutan de la estimulación mental y física. Son perros sociables y se llevan bien con otras mascotas y niños."
+  },
+  "weimaraner": {
+    "raza": "Weimaraner",
+    "temperamento": "Activo, leal, amigable, independiente, energético",
+    "colores": "Gris plateado, gris",
+    "origen": "Alemania",
+    "vida": "10-13 años",
+    "altura": "Hembra: 58–63 cm, Macho: 63–70 cm",
+    "peso": "Hembra: 25–35 kg, Macho: 35–40 kg",
+    "info": "El Weimaraner es una raza de perro de caza conocida por su energía y resistencia. Son inteligentes, leales y tienen un gran impulso de trabajo. Requieren ejercicio regular y disfrutan de actividades al aire libre, como correr o nadar. Son excelentes compañeros para personas activas que disfrutan de deportes caninos."
+  },
+  "whippet": {
+    "raza": "Galgo",
+    "temperamento": "Amigable, enérgico, independiente, tranquilo",
+    "colores": "Negro, blanco, azul, atigrado, sable",
+    "origen": "Reino Unido",
+    "vida": "12-15 años",
+    "altura": "45–56 cm",
+    "peso": "9–18 kg",
+    "info": "El Galgo es una raza de perro ligera y elegante, conocida por su velocidad y agilidad. Son amigables y se llevan bien con otros perros y mascotas. A pesar de ser activos y rápidos, también disfrutan de pasar tiempo tranquilos en casa. Son ideales para personas con un estilo de vida activo y que disfrutan de correr."
+  }
+}
