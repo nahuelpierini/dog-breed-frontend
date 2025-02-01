@@ -10,8 +10,8 @@ class ApiService {
   // Method to send an image file to the server for prediction
   static Future<Map<String, dynamic>> sendImageToServer(File image) async {
     // Define the API endpoint for prediction
-    final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
-
+    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
+    final url = Uri.parse('http://127.0.0.1:5000/predict');
     // Get the authorization token from AuthService
     final token = await AuthService.getToken();
 
@@ -23,11 +23,12 @@ class ApiService {
 
     // Prepare the multipart request for uploading the image
     final request = http.MultipartRequest('POST', url);
-    request.headers['Authorization'] = 'Bearer $token';  // Add authorization token to headers
+    request.headers['Authorization'] =
+        'Bearer $token'; // Add authorization token to headers
     request.files.add(await http.MultipartFile.fromPath(
-      'file',  // Field name expected by the server
-      image.path,  // Path of the image file
-      contentType: MediaType.parse(mimeType),  // Set content type from MIME type
+      'file', // Field name expected by the server
+      image.path, // Path of the image file
+      contentType: MediaType.parse(mimeType), // Set content type from MIME type
     ));
 
     try {
@@ -37,9 +38,10 @@ class ApiService {
 
       // Check if the response status code is OK (200)
       if (response.statusCode == 200) {
-        return json.decode(responseBody);  // Return the decoded response body
+        return json.decode(responseBody); // Return the decoded response body
       } else {
-        throw Exception("Request failed with status code: ${response.statusCode}");
+        throw Exception(
+            "Request failed with status code: ${response.statusCode}");
       }
     } catch (e) {
       throw Exception("Error sending image to server: $e");
@@ -47,10 +49,11 @@ class ApiService {
   }
 
   // Method to send image bytes to the server for prediction
-  static Future<Map<String, dynamic>> sendImageBytesToServer(Uint8List bytes) async {
+  static Future<Map<String, dynamic>> sendImageBytesToServer(
+      Uint8List bytes) async {
     // Define the API endpoint for prediction
-    final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
-
+    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
+    final url = Uri.parse('http://127.0.0.1:5000/predict');
     // Get the authorization token from AuthService
     final token = await AuthService.getToken();
 
@@ -63,12 +66,13 @@ class ApiService {
 
     // Prepare the multipart request for uploading the image
     final request = http.MultipartRequest('POST', url);
-    request.headers['Authorization'] = 'Bearer $token';  // Add authorization token to headers
+    request.headers['Authorization'] =
+        'Bearer $token'; // Add authorization token to headers
     request.files.add(http.MultipartFile.fromBytes(
-      'file',  // Field name expected by the server
-      bytes,  // Image bytes
-      filename: 'image',  // Generic filename for the image
-      contentType: MediaType.parse(mimeType),  // Set content type from MIME type
+      'file', // Field name expected by the server
+      bytes, // Image bytes
+      filename: 'image', // Generic filename for the image
+      contentType: MediaType.parse(mimeType), // Set content type from MIME type
     ));
 
     try {
@@ -78,9 +82,10 @@ class ApiService {
 
       // Check if the response status code is OK (200)
       if (response.statusCode == 200) {
-        return json.decode(responseBody);  // Return the decoded response body
+        return json.decode(responseBody); // Return the decoded response body
       } else {
-        throw Exception("Request failed with status code: ${response.statusCode}");
+        throw Exception(
+            "Request failed with status code: ${response.statusCode}");
       }
     } catch (e) {
       throw Exception("Error sending image to server: $e");
@@ -89,7 +94,8 @@ class ApiService {
 
   // Helper method to determine the MIME type from file extension using mime package
   static String? _getMimeType(String path) {
-    final mimeType = lookupMimeType(path);  // Get the MIME type using mime package
+    final mimeType =
+        lookupMimeType(path); // Get the MIME type using mime package
     return mimeType;
   }
 }
