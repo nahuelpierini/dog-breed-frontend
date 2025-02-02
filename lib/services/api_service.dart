@@ -12,6 +12,7 @@ class ApiService {
     // Define the API endpoint for prediction
     //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
     final url = Uri.parse('http://127.0.0.1:5000/predict');
+
     // Get the authorization token from AuthService
     final token = await AuthService.getToken();
 
