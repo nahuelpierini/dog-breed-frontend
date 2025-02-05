@@ -1,45 +1,57 @@
-import 'dart:io';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
 import 'package:frontend_aplication/services/auth_service.dart';
 import 'package:mime/mime.dart';
+import 'package:frontend_aplication/storage/dog_persistence.dart'; // Importar la clase DogBreedPersistence
 
 class ApiService {
-  // Method to send an image file to the server for prediction
+  // Método para enviar una imagen y actualizar las razas de perro
   static Future<Map<String, dynamic>> sendImageToServer(File image) async {
-    // Define the API endpoint for prediction
-    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
     final url = Uri.parse('http://127.0.0.1:5000/predict');
-
-    // Get the authorization token from AuthService
+    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
     final token = await AuthService.getToken();
 
-    // Get the MIME type of the image file using mime package
     final mimeType = _getMimeType(image.path);
     if (mimeType == null) {
       throw Exception("Unsupported file format");
     }
 
-    // Prepare the multipart request for uploading the image
     final request = http.MultipartRequest('POST', url);
-    request.headers['Authorization'] =
-        'Bearer $token'; // Add authorization token to headers
+    request.headers['Authorization'] = 'Bearer $token';
     request.files.add(await http.MultipartFile.fromPath(
-      'file', // Field name expected by the server
-      image.path, // Path of the image file
-      contentType: MediaType.parse(mimeType), // Set content type from MIME type
+      'file',
+      image.path,
+      contentType: MediaType.parse(mimeType),
     ));
 
     try {
-      // Send the request and get the response
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
 
-      // Check if the response status code is OK (200)
       if (response.statusCode == 200) {
-        return json.decode(responseBody); // Return the decoded response body
+        // Decodificar el cuerpo de la respuesta
+        final responseData = json.decode(responseBody);
+
+        // Obtener la raza y la confianza desde la respuesta
+        String breed = responseData['breed'];
+        double confidence = responseData['confidence'];
+
+        // Cargar las razas guardadas previamente desde localStorage
+        Map<String, double> breeds = DogBreedPersistence.loadBreeds();
+
+        // Verificar si el valor de confianza es mayor que el almacenado
+        if (breeds.containsKey(breed) && confidence > breeds[breed]!) {
+          breeds[breed] = confidence; // Actualizar el valor de confianza
+
+          // Guardar las razas actualizadas en localStorage
+          DogBreedPersistence.saveBreeds(breeds);
+        }
+
+        // Retornar la respuesta del servidor
+        return responseData;
       } else {
         throw Exception(
             "Request failed with status code: ${response.statusCode}");
@@ -49,41 +61,55 @@ class ApiService {
     }
   }
 
-  // Method to send image bytes to the server for prediction
+  // Método para enviar bytes de una imagen al servidor
   static Future<Map<String, dynamic>> sendImageBytesToServer(
       Uint8List bytes) async {
-    // Define the API endpoint for prediction
     //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
     final url = Uri.parse('http://127.0.0.1:5000/predict');
-    // Get the authorization token from AuthService
     final token = await AuthService.getToken();
 
-    // Get the MIME type from the image bytes using mime package
     final mimeType = lookupMimeType('', headerBytes: bytes);
 
     if (mimeType == null) {
       throw Exception("Unable to determine MIME type of the file");
     }
 
-    // Prepare the multipart request for uploading the image
     final request = http.MultipartRequest('POST', url);
-    request.headers['Authorization'] =
-        'Bearer $token'; // Add authorization token to headers
+    request.headers['Authorization'] = 'Bearer $token';
     request.files.add(http.MultipartFile.fromBytes(
-      'file', // Field name expected by the server
-      bytes, // Image bytes
-      filename: 'image', // Generic filename for the image
-      contentType: MediaType.parse(mimeType), // Set content type from MIME type
+      'file',
+      bytes,
+      filename: 'image',
+      contentType: MediaType.parse(mimeType),
     ));
 
     try {
-      // Send the request and get the response
       final response = await request.send();
       final responseBody = await response.stream.bytesToString();
 
-      // Check if the response status code is OK (200)
       if (response.statusCode == 200) {
-        return json.decode(responseBody); // Return the decoded response body
+        final responseData = json.decode(responseBody);
+
+        String breed = responseData['breed'];
+        double confidence = responseData['confidence'];
+
+        Map<String, double> breeds = DogBreedPersistence.loadBreeds();
+
+// Verificar si el valor de confianza es mayor que el almacenado
+        if (breeds.containsKey(breed) && confidence > breeds[breed]!) {
+          breeds[breed] = confidence; // Actualizar el valor de confianza
+
+          // Guardar las razas actualizadas en localStorage
+          DogBreedPersistence.saveBreeds(breeds);
+
+          // Imprimir las razas y sus confidencias en consola
+          print('Razones almacenadas después de la detección:');
+          breeds.forEach((key, value) {
+            print('$key: $value');
+          });
+        }
+
+        return responseData;
       } else {
         throw Exception(
             "Request failed with status code: ${response.statusCode}");
@@ -93,11 +119,9 @@ class ApiService {
     }
   }
 
-  // Helper method to determine the MIME type from file extension using mime package
+  // Método para obtener el MIME type del archivo
   static String? _getMimeType(String path) {
-    final mimeType =
-        lookupMimeType(path); // Get the MIME type using mime package
-    return mimeType;
+    return lookupMimeType(path);
   }
 }
 

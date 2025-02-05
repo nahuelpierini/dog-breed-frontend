@@ -1,16 +1,17 @@
 import 'package:http/http.dart' as http;
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'dart:convert';
+import 'dart:html'; // Para trabajar con localStorage en Web
 
+/*
+VER SI PUEDO EVITAR ALMACENAR EL TOKEN EN LOCAL STORAGE  Y SOLO USAR EL EMAIL
+*/
 class AuthService {
   // Base URL for authentication-related API endpoints
-  //static const String _baseUrl = 'https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/';
-  static const String _baseUrl = 'http://127.0.0.1:5000/';
+  static const String _baseUrl =
+      'https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/';
+  //static const String _baseUrl = 'http://127.0.0.1:5000/';
   // HTTP client to perform API requests
   static final http.Client _client = http.Client();
-
-  // Secure storage instance to store and retrieve sensitive data like tokens
-  static final FlutterSecureStorage _storage = FlutterSecureStorage();
 
   // Login method that authenticates the user and stores the JWT token
   static Future<bool> login(String email, String password) async {
@@ -24,11 +25,12 @@ class AuthService {
     );
 
     if (response.statusCode == 200) {
-      // If the login is successful, store the JWT token in secure storage
+      // If the login is successful, store the JWT token in localStorage
       final jsonResponse = json.decode(response.body);
       final token = jsonResponse[
           'access_token']; // Adjust according to your actual response
-      await _storage.write(key: 'jwt', value: token); // Store token securely
+      window.localStorage['jwt'] = token; // Store token in localStorage
+      window.localStorage['user_email'] = email; // Guardar email del usuario
       print("Login success!");
       return true; // Return true if login is successful
     } else {
@@ -70,13 +72,17 @@ class AuthService {
   static http.Client get client => _client;
 
   // Method to get the stored JWT token
-  static Future<String?> getToken() async {
-    return await _storage.read(
-        key: 'jwt'); // Retrieve the token from secure storage
+  static String? getToken() {
+    return window.localStorage['jwt']; // Retrieve the token from localStorage
   }
 
   // Method to log out by deleting the stored JWT token
   static Future<void> logout() async {
-    await _storage.delete(key: 'jwt'); // Delete the token from secure storage
+    window.localStorage.remove('jwt'); // Delete the token from localStorage
+  }
+
+  // Método para obtener el email del usuario actual
+  static String? getUserEmail() {
+    return window.localStorage['user_email'];
   }
 }

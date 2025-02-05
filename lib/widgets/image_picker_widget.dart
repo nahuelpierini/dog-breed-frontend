@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:frontend_aplication/services/api_service.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class ImagePickerWidget extends StatefulWidget {
   const ImagePickerWidget({super.key});
@@ -99,22 +100,28 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           if (_loading) const CircularProgressIndicator(),
-          const Text(
-            "Raza de Perro:",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Text(
+            "Raza de Perro",
+            style: GoogleFonts.cherryBombOne(
+              color: Colors.black,
+              fontSize: 25.0,
+            ),
           ),
           Text(
             _breed,
-            style: const TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 18, fontFamily: 'RobotoMono'),
           ),
           const SizedBox(height: 8),
-          const Text(
-            "Porcentaje de acierto:",
-            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          Text(
+            "Porcentaje de acierto",
+            style: GoogleFonts.cherryBombOne(
+              color: Colors.black,
+              fontSize: 25.0,
+            ),
           ),
           Text(
             _confidence,
-            style: const TextStyle(fontSize: 14),
+            style: TextStyle(fontSize: 18, fontFamily: 'RobotoMono'),
           ),
         ],
       ),
@@ -184,10 +191,38 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
     }
   }
 
+  final Map<String, String> breedTranslations = {
+    "afghan_hound": "Lebrel Afgano",
+    "beagle": "Beagle",
+    "bernese_mountain_dog": "Boyero de Berna",
+    "border_collie": "Border Collie",
+    "boxer": "Bóxer",
+    "brittany_spaniel": "Bretón",
+    "chihuahua": "Chihuahua",
+    "chow": "Chow Chow",
+    "cocker_spaniel": "Cocker Spaniel",
+    "dachshund": "Perro Salchicha",
+    "doberman": "Dóberman",
+    "french_bulldog": "Bulldog Francés",
+    "german_shepherd": "Pastor Alemán",
+    "golden_retriever": "Golden Retriever",
+    "labrador_retriever": "Labrador Retriever",
+    "pitbull": "Pitbull",
+    "pug": "Pug",
+    "rottweiler": "Rottweiler",
+    "saint_bernard": "San Bernardo",
+    "siberian_husky": "Husky Siberiano",
+    "toy_poodle": "Caniche Toy",
+    "weimaraner": "Weimaraner",
+    "whippet": "Galgo"
+  };
+
   /// Updates the breed and confidence information based on the server response.
   void _updateResults(Map<String, dynamic> response) {
     setState(() {
-      _breed = response['breed'];
+      String breedEnglish = response['breed'];
+      _breed = breedTranslations[breedEnglish] ??
+          breedEnglish; // Traduce o usa el original si no está en el mapa
       _confidence = response['confidence'].toString();
       _loading = false;
     });

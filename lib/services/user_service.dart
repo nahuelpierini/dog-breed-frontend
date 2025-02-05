@@ -5,8 +5,9 @@ import 'package:frontend_aplication/models/dog.dart';
 import 'package:frontend_aplication/services/auth_service.dart';
 
 class UserService {
-  //static const String _baseUrl = 'https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/';
-  static const String _baseUrl = 'http://127.0.0.1:5000/';
+  static const String _baseUrl =
+      'https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/';
+  //static const String _baseUrl = 'http://127.0.0.1:5000/';
   static final http.Client _client = http.Client();
 
   static Future<User?> getUserProfile() async {

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:frontend_aplication/widgets/breed_item_widget.dart';
+import 'package:frontend_aplication/storage/dog_persistence.dart'; // importar
 
 class BreedsPage extends StatefulWidget {
   @override
@@ -35,31 +36,7 @@ class BreedsPageState extends State<BreedsPage> {
     22: "whippet",
   };
 
-  Map<int, String> confidenceMap = {
-    0: '95.0',
-    1: '55.0',
-    2: '95.0',
-    3: '95.0',
-    4: '55.0',
-    5: '95.0',
-    6: '55.0',
-    7: '55.0',
-    8: '55.0',
-    9: '95.0',
-    10: '95.0',
-    11: '95.0',
-    12: '55.0',
-    13: '55.0',
-    14: '55.0',
-    15: '55.0',
-    16: '95.0',
-    17: '95.0',
-    18: '55.0',
-    19: '55.0',
-    20: '95.0',
-    21: '95.0',
-    22: '95.0',
-  };
+  Map<String, double> confidenceMap = {}; // Inicializamos vacío
 
   late Future<Map<String, dynamic>> dogInfo;
 
@@ -67,12 +44,20 @@ class BreedsPageState extends State<BreedsPage> {
   void initState() {
     super.initState();
     dogInfo = loadDogInfo();
+    loadConfidenceValues(); // Cargar valores de confianza desde localStorage
   }
 
   Future<Map<String, dynamic>> loadDogInfo() async {
     String jsonString =
         await rootBundle.loadString('assets/data/dog_info.json');
     return json.decode(jsonString);
+  }
+
+  void loadConfidenceValues() {
+    setState(() {
+      confidenceMap =
+          DogBreedPersistence.loadBreeds(); // Cargar los valores guardados
+    });
   }
 
   @override
@@ -84,16 +69,13 @@ class BreedsPageState extends State<BreedsPage> {
           return Center(child: CircularProgressIndicator());
         }
 
-        // Usamos LayoutBuilder para ajustar el número de columnas
         return LayoutBuilder(
           builder: (context, constraints) {
-            // Determinamos el número de columnas según el ancho de la pantalla
-            int crossAxisCount = 4; // Default para pantallas grandes
-
+            int crossAxisCount = 4;
             if (constraints.maxWidth < 600) {
-              crossAxisCount = 2; // 1 columna para pantallas pequeñas
+              crossAxisCount = 2;
             } else if (constraints.maxWidth < 900) {
-              crossAxisCount = 3; // 2 columnas para pantallas medianas
+              crossAxisCount = 3;
             }
 
             return GridView.builder(
@@ -108,18 +90,17 @@ class BreedsPageState extends State<BreedsPage> {
                 String breedName = breedNames[index]!;
                 String imagePath =
                     'assets/breeds/${breedName.toLowerCase().replaceAll(" ", "_")}.jpg';
-                String confidence = confidenceMap[index] ?? '0.0';
+                String confidence =
+                    confidenceMap[breedName]?.toString() ?? '0.0';
 
-                // Ajustar el tamaño de la imagen para que no ocupe toda la celda
                 return Padding(
-                  padding: const EdgeInsets.all(
-                      8.0), // Ajustar el padding para hacer las celdas más pequeñas
+                  padding: const EdgeInsets.all(8.0),
                   child: BreedItemWidget(
                     imagePath: imagePath,
                     breedName: breedName,
                     dogInfo: snapshot.data![breedName],
                     confidence: confidence,
-                    imageWidth: 20, // Ajustar el ancho de las imágenes
+                    imageWidth: 20,
                   ),
                 );
               },

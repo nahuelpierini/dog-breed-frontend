@@ -128,7 +128,7 @@ class ProfilePageState extends State<ProfilePage> {
                                         Text(
                                           '${_user!.firstName} ${_user!.lastName}',
                                           style: TextStyle(
-                                            fontSize: 24,
+                                            fontSize: 20,
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black87,
                                           ),
@@ -210,7 +210,7 @@ class ProfilePageState extends State<ProfilePage> {
   Widget _buildDogSection() {
     return Center(
       child: ConstrainedBox(
-        constraints: BoxConstraints(maxWidth: 225),
+        constraints: BoxConstraints(maxWidth: 210),
         child: Card(
           elevation: 5,
           shape: RoundedRectangleBorder(

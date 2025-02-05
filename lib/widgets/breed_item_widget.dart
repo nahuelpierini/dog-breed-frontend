@@ -25,6 +25,7 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
   @override
   Widget build(BuildContext context) {
     double confidenceValue = double.tryParse(widget.confidence) ?? 0.0;
+    const double confidence = 70;
 
     return GestureDetector(
       onTap: () {
@@ -40,7 +41,7 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
             child: Stack(
               children: [
                 ColorFiltered(
-                  colorFilter: confidenceValue < 90
+                  colorFilter: confidenceValue < confidence
                       ? ColorFilter.mode(Colors.blueGrey, BlendMode.saturation)
                       : ColorFilter.mode(
                           Colors.transparent, BlendMode.saturation),
@@ -51,7 +52,7 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
                     height: double.infinity,
                   ),
                 ),
-                if (confidenceValue < 90)
+                if (confidenceValue < confidence)
                   BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
                     child: Container(
@@ -82,7 +83,7 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
                 child: Text(
                   widget.dogInfo['raza'].toUpperCase(),
                   style: GoogleFonts.cherryBombOne(
-                    color: confidenceValue < 90
+                    color: confidenceValue < confidence
                         ? Color.fromARGB(255, 130, 166, 196)
                         : Colors.white, // Cambio de color según confianza
                     fontSize: 15.0,
@@ -99,10 +100,10 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
             right: 10,
             child: FloatingActionButton(
               mini: true,
-              backgroundColor: confidenceValue < 90
+              backgroundColor: confidenceValue < confidence
                   ? Colors.grey
                   : const Color.fromARGB(255, 130, 166, 196),
-              onPressed: confidenceValue < 90
+              onPressed: confidenceValue < confidence
                   ? null
                   : () {
                       setState(() {
