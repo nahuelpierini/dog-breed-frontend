@@ -5,6 +5,8 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:frontend_aplication/services/api_service.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:frontend_aplication/storage/dog_persistence.dart';
 
 class ImagePickerWidget extends StatefulWidget {
   const ImagePickerWidget({super.key});
@@ -221,11 +223,76 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
   void _updateResults(Map<String, dynamic> response) {
     setState(() {
       String breedEnglish = response['breed'];
-      _breed = breedTranslations[breedEnglish] ??
-          breedEnglish; // Traduce o usa el original si no está en el mapa
+      _breed = breedTranslations[breedEnglish] ?? breedEnglish;
       _confidence = response['confidence'].toString();
       _loading = false;
+
+      double confidenceValue = double.parse(_confidence);
+      double previousConfidence = response['previous_confidence'] ?? 0;
+
+      print("Breed: $breedEnglish");
+      print("Confidence Value (New): $confidenceValue");
+      print("Previous Confidence (Stored): $previousConfidence");
+
+      // Verificar si la raza aún no ha sido descubierta con confianza ≥ 75
+      bool isNewBreed = previousConfidence < 75;
+
+      if (confidenceValue > 75 && isNewBreed) {
+        print("Showing unlock dialog for: $_breed");
+        _showUnlockDialog(_breed);
+      }
+
+      // Guardar la nueva confianza en el almacenamiento
+      Map<String, double> discoveredBreeds = DogBreedPersistence.loadBreeds();
+      discoveredBreeds[breedEnglish] = confidenceValue;
+      DogBreedPersistence.saveBreeds(discoveredBreeds);
     });
+  }
+
+  void _showUnlockDialog(String breed) {
+    AwesomeDialog(
+      context: context,
+      customHeader: _AnimatedCheckIcon(), // Usa el widget con animación fluida
+      title: '¡Excelente!',
+      body: Column(
+        children: [
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: '¡Has desbloqueado un ',
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+                TextSpan(
+                  text: '$breed',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text: '!\n\nVe a la sección "',
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+                TextSpan(
+                  text: 'Razas',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                TextSpan(
+                  text: '" y mira la carta.',
+                  style: TextStyle(fontWeight: FontWeight.normal),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+      animType: AnimType.scale,
+      width: 400,
+      buttonsBorderRadius: BorderRadius.circular(8),
+      btnOkText: '¡Genial!',
+      btnOkColor: Color.fromARGB(255, 130, 166, 196),
+      btnOkOnPress: () {
+        print('Raza desbloqueada: $breed');
+      },
+    ).show();
   }
 
   /// Handles errors during image processing or server communication.
@@ -235,5 +302,66 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
       _breed = 'Error: $error';
       _confidence = '';
     });
+  }
+}
+
+// ✅ **Widget para la animación fluida del icono**
+class _AnimatedCheckIcon extends StatefulWidget {
+  @override
+  _AnimatedCheckIconState createState() => _AnimatedCheckIconState();
+}
+
+class _AnimatedCheckIconState extends State<_AnimatedCheckIcon>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _rotationAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: Duration(milliseconds: 800), // Duración animación
+      vsync: this,
+    );
+
+    // Animación de escala con rebote
+    _scaleAnimation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.elasticOut, // Rebote suave
+    );
+
+    // Animación de rotación ligera
+    _rotationAnimation = Tween<double>(begin: -0.2, end: 0.0).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+
+    _controller.forward(); // Iniciar animación al mostrar el diálogo
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return AnimatedBuilder(
+      animation: _controller,
+      builder: (context, child) {
+        return Transform.rotate(
+          angle: _rotationAnimation.value, // Rotación ligera
+          child: Transform.scale(
+            scale: _scaleAnimation.value, // Efecto de rebote
+            child: Icon(
+              Icons.check_circle,
+              size: 100,
+              color: Color.fromARGB(255, 130, 166, 196), // Color ámbar
+            ),
+          ),
+        );
+      },
+    );
   }
 }

@@ -11,10 +11,9 @@ class ApiService {
   // Método para enviar una imagen y actualizar las razas de perro
   static Future<Map<String, dynamic>> sendImageToServer(File image) async {
     final url = Uri.parse('http://127.0.0.1:5000/predict');
-    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
     final token = await AuthService.getToken();
-
     final mimeType = _getMimeType(image.path);
+
     if (mimeType == null) {
       throw Exception("Unsupported file format");
     }
@@ -32,25 +31,26 @@ class ApiService {
       final responseBody = await response.stream.bytesToString();
 
       if (response.statusCode == 200) {
-        // Decodificar el cuerpo de la respuesta
         final responseData = json.decode(responseBody);
-
-        // Obtener la raza y la confianza desde la respuesta
         String breed = responseData['breed'];
         double confidence = responseData['confidence'];
 
-        // Cargar las razas guardadas previamente desde localStorage
+        // Cargar las razas previamente almacenadas
         Map<String, double> breeds = DogBreedPersistence.loadBreeds();
 
-        // Verificar si el valor de confianza es mayor que el almacenado
-        if (breeds.containsKey(breed) && confidence > breeds[breed]!) {
-          breeds[breed] = confidence; // Actualizar el valor de confianza
+        // Obtener la confianza previa antes de actualizarla
+        double previousConfidence =
+            breeds.containsKey(breed) ? breeds[breed]! : 0;
 
-          // Guardar las razas actualizadas en localStorage
+        // Si la nueva confianza es mayor, actualizarla
+        if (confidence > previousConfidence) {
+          breeds[breed] = confidence;
           DogBreedPersistence.saveBreeds(breeds);
         }
 
-        // Retornar la respuesta del servidor
+        // Agregar la confianza previa a la respuesta
+        responseData['previous_confidence'] = previousConfidence;
+
         return responseData;
       } else {
         throw Exception(
@@ -64,10 +64,8 @@ class ApiService {
   // Método para enviar bytes de una imagen al servidor
   static Future<Map<String, dynamic>> sendImageBytesToServer(
       Uint8List bytes) async {
-    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
     final url = Uri.parse('http://127.0.0.1:5000/predict');
     final token = await AuthService.getToken();
-
     final mimeType = lookupMimeType('', headerBytes: bytes);
 
     if (mimeType == null) {
@@ -89,25 +87,23 @@ class ApiService {
 
       if (response.statusCode == 200) {
         final responseData = json.decode(responseBody);
-
         String breed = responseData['breed'];
         double confidence = responseData['confidence'];
 
         Map<String, double> breeds = DogBreedPersistence.loadBreeds();
 
-// Verificar si el valor de confianza es mayor que el almacenado
-        if (breeds.containsKey(breed) && confidence > breeds[breed]!) {
-          breeds[breed] = confidence; // Actualizar el valor de confianza
+        // Obtener la confianza previa
+        double previousConfidence =
+            breeds.containsKey(breed) ? breeds[breed]! : 0;
 
-          // Guardar las razas actualizadas en localStorage
+        // Si la nueva confianza es mayor, actualizarla
+        if (confidence > previousConfidence) {
+          breeds[breed] = confidence;
           DogBreedPersistence.saveBreeds(breeds);
-
-          // Imprimir las razas y sus confidencias en consola
-          print('Razones almacenadas después de la detección:');
-          breeds.forEach((key, value) {
-            print('$key: $value');
-          });
         }
+
+        // Agregar la confianza previa a la respuesta
+        responseData['previous_confidence'] = previousConfidence;
 
         return responseData;
       } else {
