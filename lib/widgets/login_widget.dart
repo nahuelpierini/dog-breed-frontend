@@ -57,14 +57,15 @@ class _LoginWidgetState extends State<LoginWidget> {
       } else {
         if (mounted) {
           setState(() {
-            _errorMessage = 'Login failed. Please check your credentials.';
+            _errorMessage =
+                'Fallo en el inicio de sesión. Verifique sus credenciales.';
           });
         }
       }
     } catch (e) {
       if (mounted) {
         setState(() {
-          _errorMessage = 'An error occurred: $e';
+          _errorMessage = 'Ocurrió un error: $e';
         });
       }
     } finally {
@@ -102,7 +103,7 @@ class _LoginWidgetState extends State<LoginWidget> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              "LOGIN",
+              "INICIAR SESIÓN",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0,
@@ -118,7 +119,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               controller: _passwordController,
               obscureText: !_passwordVisible,
               decoration: InputDecoration(
-                labelText: "Password",
+                labelText: "Contraseña",
                 suffixIcon: IconButton(
                   icon: Icon(
                     _passwordVisible ? Icons.visibility : Icons.visibility_off,
@@ -137,7 +138,7 @@ class _LoginWidgetState extends State<LoginWidget> {
             else
               ElevatedButton(
                 onPressed: _login,
-                child: const Text("Login"),
+                child: const Text("Iniciar sesión"),
               ),
             const SizedBox(height: 8.0),
             if (_errorMessage.isNotEmpty)
@@ -153,7 +154,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                   MaterialPageRoute(builder: (context) => const RegisterPage()),
                 );
               },
-              child: const Text("Don't have an account? Register",
+              child: const Text("No tiene cuenta? Registrese",
                   style: TextStyle(fontStyle: FontStyle.italic)),
             ),
           ],

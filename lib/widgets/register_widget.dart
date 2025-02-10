@@ -70,18 +70,18 @@ class _RegisterWidgetState extends State<RegisterWidget> {
             Navigator.pop(context);
           } else {
             setState(() {
-              _errorMessage = 'Registration failed. Please try again.';
+              _errorMessage = 'Falló el registro. Intentelo nuevamente.';
             });
           }
         }
       } catch (e) {
         if (mounted) {
           setState(() {
-            if (e.toString().contains("Email already registered")) {
+            if (e.toString().contains("Email ya registrado")) {
               _errorMessage =
-                  'The email is already registered. Please use a different email.';
+                  'El email ya está registrado. Por favor use uno diferente.';
             } else {
-              _errorMessage = 'An error occurred: $e';
+              _errorMessage = 'Ocurrió un error: $e';
             }
           });
         }
@@ -135,7 +135,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  "REGISTER",
+                  "REGISTRARSE",
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.bold,
@@ -151,11 +151,11 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         decoration: const InputDecoration(labelText: "Email"),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Email is required';
+                            return 'Email obligatorio';
                           } else if (!RegExp(
                                   r"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$")
                               .hasMatch(value)) {
-                            return 'Please enter a valid email address';
+                            return 'Por favor, ingrese un email válido';
                           }
                           return null;
                         },
@@ -163,7 +163,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       TextFormField(
                         controller: _passwordController,
                         decoration: InputDecoration(
-                          labelText: "Password",
+                          labelText: "Contraseña",
                           suffixIcon: IconButton(
                             icon: Icon(_obscurePassword
                                 ? Icons.visibility_off
@@ -178,9 +178,9 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         obscureText: _obscurePassword,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Password is required';
+                            return 'Contraseña obligatoria';
                           } else if (value.length < 3 || value.length > 10) {
-                            return 'Password must be between 3 and 10 characters';
+                            return 'La contraseña debe tener entre 3 y 10 caracteres';
                           }
                           return null;
                         },
@@ -188,7 +188,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       TextFormField(
                         controller: _confirmPasswordController,
                         decoration: InputDecoration(
-                          labelText: "Confirm Password",
+                          labelText: "Corfirmar Contraseña",
                           suffixIcon: IconButton(
                             icon: Icon(_obscureConfirmPassword
                                 ? Icons.visibility_off
@@ -204,21 +204,20 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         obscureText: _obscureConfirmPassword,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please confirm your password';
+                            return 'Por favor confirme su contraseña';
                           } else if (value != _passwordController.text) {
-                            return 'Passwords do not match';
+                            return 'La contraseña no coincide';
                           }
                           return null;
                         },
                       ),
                       TextFormField(
                         controller: _firstNameController,
-                        decoration:
-                            const InputDecoration(labelText: "First Name"),
+                        decoration: const InputDecoration(labelText: "Nombre"),
                         maxLength: 30,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'First Name is required';
+                            return 'Nombre obligatorio';
                           }
                           return null;
                         },
@@ -226,11 +225,11 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       TextFormField(
                         controller: _lastNameController,
                         decoration:
-                            const InputDecoration(labelText: "Last Name"),
+                            const InputDecoration(labelText: "Apellido"),
                         maxLength: 30,
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Last Name is required';
+                            return 'Apellido obligatorio';
                           }
                           return null;
                         },
@@ -240,11 +239,11 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         child: AbsorbPointer(
                           child: TextFormField(
                             controller: _birthDateController,
-                            decoration:
-                                const InputDecoration(labelText: "Birth Date"),
+                            decoration: const InputDecoration(
+                                labelText: "Fecha de Nacimiento"),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Birth Date is required';
+                                return 'Fecha de nacimiento obligatoria';
                               }
                               return null;
                             },
@@ -257,10 +256,10 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                           child: TextFormField(
                             controller: _countryController,
                             decoration:
-                                const InputDecoration(labelText: "Country"),
+                                const InputDecoration(labelText: "País"),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Country is required';
+                                return 'Pais obligatorio';
                               }
                               return null;
                             },
@@ -273,7 +272,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                       else
                         ElevatedButton(
                           onPressed: _register,
-                          child: const Text("Register"),
+                          child: const Text("Registrase"),
                         ),
                       const SizedBox(height: 8.0),
                       if (_errorMessage.isNotEmpty)
@@ -285,7 +284,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
                         onPressed: () {
                           Navigator.pop(context);
                         },
-                        child: const Text("Already have an account? Login",
+                        child: const Text("Ya tiene una cuenta? Inicie sesión",
                             style: TextStyle(fontStyle: FontStyle.italic)),
                       ),
                     ],

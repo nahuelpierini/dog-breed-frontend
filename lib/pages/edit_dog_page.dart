@@ -104,7 +104,9 @@ class EditDogPageState extends State<EditDogPage> {
                       children: [
                         Center(
                           child: Text(
-                            widget.dog != null ? 'Edit Dog' : 'Add Dog',
+                            widget.dog != null
+                                ? 'Editar Info'
+                                : 'Agregar Perrito',
                             style: TextStyle(
                               fontSize: 24.0,
                               fontWeight: FontWeight.bold,
@@ -121,10 +123,10 @@ class EditDogPageState extends State<EditDogPage> {
                               TextFormField(
                                 controller: _nameController,
                                 decoration:
-                                    const InputDecoration(labelText: 'Name'),
+                                    const InputDecoration(labelText: 'Nombre'),
                                 validator: (value) {
                                   if (value == null || value.isEmpty) {
-                                    return 'Please enter a name';
+                                    return 'Ingrese nombre';
                                   }
                                   return null;
                                 },
@@ -132,12 +134,12 @@ class EditDogPageState extends State<EditDogPage> {
                               TextFormField(
                                 controller: _breedController,
                                 decoration:
-                                    const InputDecoration(labelText: 'Breed'),
+                                    const InputDecoration(labelText: 'Raza'),
                               ),
                               TextFormField(
                                 controller: _ageController,
                                 decoration:
-                                    const InputDecoration(labelText: 'Age'),
+                                    const InputDecoration(labelText: 'Edad'),
                                 keyboardType: TextInputType.number,
                               ),
                               const SizedBox(height: 20),
@@ -145,8 +147,8 @@ class EditDogPageState extends State<EditDogPage> {
                                 child: ElevatedButton(
                                   onPressed: _saveDog,
                                   child: Text(widget.dog != null
-                                      ? 'Update Dog'
-                                      : 'Add Dog'),
+                                      ? 'Actualizar Perrito'
+                                      : 'Agregar Perrito'),
                                 ),
                               ),
                             ],

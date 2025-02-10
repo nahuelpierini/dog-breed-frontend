@@ -37,7 +37,7 @@ class ProfilePageState extends State<ProfilePage> {
       final date = inputFormat.parse(dateStr);
       return outputFormat.format(date);
     } catch (e) {
-      return "Invalid date: $e";
+      return "Fecha inválida: $e";
     }
   }
 
@@ -66,7 +66,7 @@ class ProfilePageState extends State<ProfilePage> {
       });
     } catch (e) {
       setState(() {
-        _errorMessage = 'Error fetching profile data: $e';
+        _errorMessage = 'Error al obtener datos del servidor: $e';
         _loading = false;
       });
     }
@@ -143,7 +143,8 @@ class ProfilePageState extends State<ProfilePage> {
                                         ),
                                         const SizedBox(height: 8),
                                         Text(
-                                          _user!.country ?? "No country info",
+                                          _user!.country ??
+                                              "No hay info del país",
                                           style: TextStyle(
                                             fontSize: 16,
                                             color: Colors.grey[600],
@@ -177,7 +178,7 @@ class ProfilePageState extends State<ProfilePage> {
                                               }
                                             }
                                           },
-                                          child: const Text("Edit Profile"),
+                                          child: const Text("Editar Perfil"),
                                         ),
                                       ],
                                     ),
@@ -236,7 +237,7 @@ class ProfilePageState extends State<ProfilePage> {
                     ? Column(
                         children: [
                           const Text(
-                            'No dogs registered',
+                            'No hay perros registrados',
                             style: TextStyle(
                               fontSize: 16,
                               color: Colors.grey,
@@ -257,7 +258,7 @@ class ProfilePageState extends State<ProfilePage> {
                                 _fetchProfileData();
                               }
                             },
-                            child: const Text('Add a Dog'),
+                            child: const Text('Agregar perrito'),
                           ),
                         ],
                       )
@@ -287,7 +288,7 @@ class ProfilePageState extends State<ProfilePage> {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                'Age: ${dog.age}',
+                                'Edad: ${dog.age}',
                                 style: const TextStyle(
                                   fontSize: 16,
                                   color: Colors.grey,
@@ -314,7 +315,7 @@ class ProfilePageState extends State<ProfilePage> {
                                       _fetchProfileData();
                                     }
                                   },
-                                  child: const Text('Edit Dog Info'),
+                                  child: const Text('Editar Info'),
                                 ),
                               ),
                             ],

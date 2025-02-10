@@ -65,7 +65,7 @@ class EditProfilePageState extends State<EditProfilePage> {
         } else {
           if (mounted) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('Failed to update profile')),
+              const SnackBar(content: Text('Error al actualizar el perfil')),
             );
           }
         }
@@ -120,7 +120,7 @@ class EditProfilePageState extends State<EditProfilePage> {
                 child: Column(
                   children: [
                     Text(
-                      "Edit Profile",
+                      "Editar Perfil",
                       style: TextStyle(
                         fontSize: 24.0,
                         fontWeight: FontWeight.bold,
@@ -129,21 +129,20 @@ class EditProfilePageState extends State<EditProfilePage> {
                     ),
                     TextFormField(
                       controller: _firstNameController,
-                      decoration:
-                          const InputDecoration(labelText: 'First Name'),
+                      decoration: const InputDecoration(labelText: 'Nombre'),
                       validator: (value) =>
-                          value!.isEmpty ? 'First Name is required' : null,
+                          value!.isEmpty ? 'Nombre obligatorio' : null,
                     ),
                     TextFormField(
                       controller: _lastNameController,
-                      decoration: const InputDecoration(labelText: 'Last Name'),
+                      decoration: const InputDecoration(labelText: 'Apellido'),
                       validator: (value) =>
-                          value!.isEmpty ? 'Last Name is required' : null,
+                          value!.isEmpty ? 'Apellido obligatorio' : null,
                     ),
                     TextFormField(
                       controller: _birthDateController,
                       decoration: const InputDecoration(
-                        labelText: 'Birth Date',
+                        labelText: 'Fecha de Nacimiento',
                         suffixIcon: Icon(Icons.calendar_today),
                       ),
                       readOnly: true,
@@ -160,8 +159,9 @@ class EditProfilePageState extends State<EditProfilePage> {
                               DateFormat('yyyy-MM-dd').format(pickedDate!);
                         });
                       },
-                      validator: (value) =>
-                          value!.isEmpty ? 'Birth Date is required' : null,
+                      validator: (value) => value!.isEmpty
+                          ? 'Fecha de Nacimiento obligatoria'
+                          : null,
                     ),
                     GestureDetector(
                       onTap: _selectCountry,
@@ -169,18 +169,18 @@ class EditProfilePageState extends State<EditProfilePage> {
                         child: TextFormField(
                           controller: _countryController,
                           decoration: const InputDecoration(
-                            labelText: 'Country',
+                            labelText: 'País',
                             suffixIcon: Icon(Icons.arrow_drop_down),
                           ),
                           validator: (value) =>
-                              value!.isEmpty ? 'Country is required' : null,
+                              value!.isEmpty ? 'País oblogatorio' : null,
                         ),
                       ),
                     ),
                     const SizedBox(height: 20),
                     ElevatedButton(
                       onPressed: _saveProfile,
-                      child: const Text('Save'),
+                      child: const Text('Guardar'),
                     ),
                   ],
                 ),

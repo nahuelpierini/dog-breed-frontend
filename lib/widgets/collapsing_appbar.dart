@@ -55,8 +55,8 @@ class CollapsingAppBar extends StatelessWidget {
           unselectedLabelColor: Color.fromARGB(173, 158, 158, 158),
           tabs: [
             Tab(icon: Icon(Icons.home_rounded), text: "Detective"),
-            Tab(icon: Icon(Icons.shopping_bag_rounded), text: "Breeds"),
-            Tab(icon: Icon(Icons.person), text: "Profile"),
+            Tab(icon: Icon(Icons.shopping_bag_rounded), text: "Razas"),
+            Tab(icon: Icon(Icons.person), text: "Perfil"),
           ],
         ),
       ),
