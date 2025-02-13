@@ -108,6 +108,7 @@ class _RegisterWidgetState extends State<RegisterWidget> {
     );
   }
 
+  // Build the registration form
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

@@ -89,7 +89,10 @@ class ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: const Icon(Icons.exit_to_app),
+            icon: const Icon(
+              Icons.exit_to_app,
+              color: Color.fromARGB(255, 177, 12, 0),
+            ),
             onPressed: _logout,
           ),
         ],

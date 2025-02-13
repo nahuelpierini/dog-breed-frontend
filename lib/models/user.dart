@@ -4,8 +4,8 @@ class User {
   final String email;
   final String firstName;
   final String lastName;
-  final String? birthDate; // Optional: Nullable for cases where the date is not provided
-  final String? country; // Optional: Nullable for cases where the country is not provided
+  final String? birthDate;
+  final String? country;
 
   /// Constructs a [User] instance with the provided attributes.
   const User({
@@ -20,12 +20,12 @@ class User {
   /// Factory constructor to create a [User] instance from a JSON map.
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      userId: json['user_id'] as String, // Ensures type safety
+      userId: json['user_id'] as String,
       email: json['email'] as String,
       firstName: json['first_name'] as String,
       lastName: json['last_name'] as String,
-      birthDate: json['birth_date'] as String?, // Nullable field
-      country: json['country'] as String?, // Nullable field
+      birthDate: json['birth_date'] as String?,
+      country: json['country'] as String?,
     );
   }
 

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:flutter/services.dart' show rootBundle;
 import 'package:frontend_aplication/widgets/breed_item_widget.dart';
-import 'package:frontend_aplication/storage/dog_persistence.dart'; // importar
+import 'package:frontend_aplication/storage/dog_persistence.dart';
 
 class BreedsPage extends StatefulWidget {
   @override
@@ -36,7 +36,8 @@ class BreedsPageState extends State<BreedsPage> {
     22: "whippet",
   };
 
-  Map<String, double> confidenceMap = {}; // Inicializamos vacío
+  // Start empty
+  Map<String, double> confidenceMap = {};
 
   late Future<Map<String, dynamic>> dogInfo;
 
@@ -44,7 +45,8 @@ class BreedsPageState extends State<BreedsPage> {
   void initState() {
     super.initState();
     dogInfo = loadDogInfo();
-    loadConfidenceValues(); // Cargar valores de confianza desde localStorage
+    // Load values from local storage
+    loadConfidenceValues();
   }
 
   Future<Map<String, dynamic>> loadDogInfo() async {
@@ -53,10 +55,10 @@ class BreedsPageState extends State<BreedsPage> {
     return json.decode(jsonString);
   }
 
+  // Load confidence values from local storage
   void loadConfidenceValues() {
     setState(() {
-      confidenceMap =
-          DogBreedPersistence.loadBreeds(); // Cargar los valores guardados
+      confidenceMap = DogBreedPersistence.loadBreeds();
     });
   }
 

@@ -193,6 +193,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
     }
   }
 
+  // Translate dog breed names to Spanish
   final Map<String, String> breedTranslations = {
     "afghan_hound": "Lebrel Afgano",
     "beagle": "Beagle",
@@ -234,7 +235,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
       print("Confidence Value (New): $confidenceValue");
       print("Previous Confidence (Stored): $previousConfidence");
 
-      // Verificar si la raza aún no ha sido descubierta con confianza ≥ 75
+      // Check if the breed is new and the confidence is high enough to unlock it
       bool isNewBreed = previousConfidence < 75;
 
       if (confidenceValue > 75 && isNewBreed) {
@@ -242,7 +243,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
         _showUnlockDialog(_breed);
       }
 
-      // Guardar la nueva confianza en el almacenamiento
+      // Save the breed and confidence value to local storage
       Map<String, double> discoveredBreeds = DogBreedPersistence.loadBreeds();
       discoveredBreeds[breedEnglish] = confidenceValue;
       DogBreedPersistence.saveBreeds(discoveredBreeds);
@@ -252,7 +253,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
   void _showUnlockDialog(String breed) {
     AwesomeDialog(
       context: context,
-      customHeader: _AnimatedCheckIcon(), // Usa el widget con animación fluida
+      customHeader: _AnimatedCheckIcon(),
       title: '¡Excelente!',
       body: Column(
         children: [
@@ -305,7 +306,7 @@ class ImagePickerWidgetState extends State<ImagePickerWidget> {
   }
 }
 
-// ✅ **Widget para la animación fluida del icono**
+// Animation for the check icon displayed when a new breed is unlocked
 class _AnimatedCheckIcon extends StatefulWidget {
   @override
   _AnimatedCheckIconState createState() => _AnimatedCheckIconState();
@@ -321,22 +322,20 @@ class _AnimatedCheckIconState extends State<_AnimatedCheckIcon>
   void initState() {
     super.initState();
     _controller = AnimationController(
-      duration: Duration(milliseconds: 800), // Duración animación
+      duration: Duration(milliseconds: 800),
       vsync: this,
     );
 
-    // Animación de escala con rebote
     _scaleAnimation = CurvedAnimation(
       parent: _controller,
-      curve: Curves.elasticOut, // Rebote suave
+      curve: Curves.elasticOut,
     );
 
-    // Animación de rotación ligera
     _rotationAnimation = Tween<double>(begin: -0.2, end: 0.0).animate(
       CurvedAnimation(parent: _controller, curve: Curves.easeOut),
     );
 
-    _controller.forward(); // Iniciar animación al mostrar el diálogo
+    _controller.forward();
   }
 
   @override
@@ -351,13 +350,13 @@ class _AnimatedCheckIconState extends State<_AnimatedCheckIcon>
       animation: _controller,
       builder: (context, child) {
         return Transform.rotate(
-          angle: _rotationAnimation.value, // Rotación ligera
+          angle: _rotationAnimation.value,
           child: Transform.scale(
-            scale: _scaleAnimation.value, // Efecto de rebote
+            scale: _scaleAnimation.value,
             child: Icon(
               Icons.check_circle,
               size: 100,
-              color: Color.fromARGB(255, 130, 166, 196), // Color ámbar
+              color: Color.fromARGB(255, 130, 166, 196),
             ),
           ),
         );

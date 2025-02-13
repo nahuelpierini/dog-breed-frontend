@@ -5,11 +5,12 @@ import 'dart:typed_data';
 import 'package:http_parser/http_parser.dart';
 import 'package:frontend_aplication/services/auth_service.dart';
 import 'package:mime/mime.dart';
-import 'package:frontend_aplication/storage/dog_persistence.dart'; // Importar la clase DogBreedPersistence
+import 'package:frontend_aplication/storage/dog_persistence.dart';
 
 class ApiService {
-  // Método para enviar una imagen y actualizar las razas de perro
+  // Method to send an image and update dog breeds
   static Future<Map<String, dynamic>> sendImageToServer(File image) async {
+    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
     final url = Uri.parse('http://127.0.0.1:5000/predict');
     final token = await AuthService.getToken();
     final mimeType = _getMimeType(image.path);
@@ -35,20 +36,20 @@ class ApiService {
         String breed = responseData['breed'];
         double confidence = responseData['confidence'];
 
-        // Cargar las razas previamente almacenadas
+        // Load previously stored races
         Map<String, double> breeds = DogBreedPersistence.loadBreeds();
 
-        // Obtener la confianza previa antes de actualizarla
+        // Obtain accuracy before updating it
         double previousConfidence =
             breeds.containsKey(breed) ? breeds[breed]! : 0;
 
-        // Si la nueva confianza es mayor, actualizarla
+        // If the new accuracy is higher, update it
         if (confidence > previousConfidence) {
           breeds[breed] = confidence;
           DogBreedPersistence.saveBreeds(breeds);
         }
 
-        // Agregar la confianza previa a la respuesta
+        // Adding pre-accuracy confidence
         responseData['previous_confidence'] = previousConfidence;
 
         return responseData;
@@ -61,9 +62,10 @@ class ApiService {
     }
   }
 
-  // Método para enviar bytes de una imagen al servidor
+  // Method to send bytes of an image to the server
   static Future<Map<String, dynamic>> sendImageBytesToServer(
       Uint8List bytes) async {
+    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
     final url = Uri.parse('http://127.0.0.1:5000/predict');
     final token = await AuthService.getToken();
     final mimeType = lookupMimeType('', headerBytes: bytes);
@@ -92,17 +94,17 @@ class ApiService {
 
         Map<String, double> breeds = DogBreedPersistence.loadBreeds();
 
-        // Obtener la confianza previa
+        // Get pre-accuracy
         double previousConfidence =
             breeds.containsKey(breed) ? breeds[breed]! : 0;
 
-        // Si la nueva confianza es mayor, actualizarla
+        // If the new accuracy is higher, update it
         if (confidence > previousConfidence) {
           breeds[breed] = confidence;
           DogBreedPersistence.saveBreeds(breeds);
         }
 
-        // Agregar la confianza previa a la respuesta
+        // Adding pre-response accuracy
         responseData['previous_confidence'] = previousConfidence;
 
         return responseData;
@@ -115,16 +117,15 @@ class ApiService {
     }
   }
 
-  // Método para obtener el MIME type del archivo
+  // Get MIME type of a file
   static String? _getMimeType(String path) {
     return lookupMimeType(path);
   }
 }
 
 
-
 /*
-  final url = Uri.parse('http://10.0.2.2:5000/predict'); // para emulador 
-  final url = Uri.parse('http://localhost:5000/predict'); // para chrome 
-  final url = Uri.parse('http://192.168.18.36:5000/predict'); // para android conectado con USB
+  final url = Uri.parse('http://10.0.2.2:5000/predict'); // Emulator
+  final url = Uri.parse('http://localhost:5000/predict'); // Chrome
+  final url = Uri.parse('http://192.168.18.36:5000/predict'); // Android connected to PC 
 */

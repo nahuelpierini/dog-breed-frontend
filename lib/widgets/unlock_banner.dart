@@ -5,10 +5,10 @@ class UnlockBanner extends StatelessWidget {
   final double confidence;
 
   const UnlockBanner({
-    Key? key,
+    super.key,
     required this.breed,
     required this.confidence,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

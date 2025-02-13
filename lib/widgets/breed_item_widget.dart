@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'dart:ui'; // Para usar el BackdropFilter
+import 'dart:ui';
 import 'package:google_fonts/google_fonts.dart';
 
 class BreedItemWidget extends StatefulWidget {
@@ -25,7 +25,7 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
   @override
   Widget build(BuildContext context) {
     double confidenceValue = double.tryParse(widget.confidence) ?? 0.0;
-    const double confidence = 70;
+    const double confidence = 75;
 
     return GestureDetector(
       onTap: () {
@@ -35,7 +35,7 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
       },
       child: Stack(
         children: [
-          // Imagen con efecto de desenfoque si la precisión es baja
+          // Image with blur effect if confidence is lower than 70
           ClipRRect(
             borderRadius: BorderRadius.circular(10),
             child: Stack(
@@ -63,16 +63,14 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
             ),
           ),
 
-          // Título encima de la imagen, sin taparla
           Positioned(
-            top: 0, // Posición en la parte superior
+            top: 0,
             left: 0,
             right: 0,
             child: Container(
-              padding: EdgeInsets.symmetric(
-                  horizontal: 10, vertical: 5), // Espaciado del texto
+              padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
-                color: Color.fromARGB(255, 130, 166, 196), // Fondo de color
+                color: Color.fromARGB(255, 130, 166, 196),
                 borderRadius: BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
@@ -85,16 +83,15 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
                   style: GoogleFonts.cherryBombOne(
                     color: confidenceValue < confidence
                         ? Color.fromARGB(255, 130, 166, 196)
-                        : Colors.white, // Cambio de color según confianza
+                        : Colors.white,
                     fontSize: 15.0,
-                    backgroundColor: Colors
-                        .transparent, // Evitar superposición con Container
+                    backgroundColor: Colors.transparent,
                   ),
                 ),
               ),
             ),
           ),
-
+          // Show values if confidence is higher than 70
           Positioned(
             bottom: 10,
             right: 10,

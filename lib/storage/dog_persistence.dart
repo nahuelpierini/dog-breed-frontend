@@ -3,16 +3,16 @@ import 'dart:html';
 import 'package:frontend_aplication/services/auth_service.dart';
 
 class DogBreedPersistence {
-  // Obtener clave específica para el usuario
+  // Get the key to store the user's data
   static String _getUserStorageKey() {
     String? email = AuthService.getUserEmail();
     if (email == null) {
       throw Exception("No user is logged in");
     }
-    return 'user_dog_breeds_$email'; // Clave específica por usuario
+    return 'user_dog_breeds_$email';
   }
 
-  // Guardar los datos de las razas en localStorage
+  // Save the breeds data to localStorage
   static void saveBreeds(Map<String, double> breeds) {
     try {
       String key = _getUserStorageKey();
@@ -23,7 +23,7 @@ class DogBreedPersistence {
     }
   }
 
-  // Cargar los datos de las razas desde localStorage
+  // Load the breeds data from localStorage
   static Map<String, double> loadBreeds() {
     try {
       String key = _getUserStorageKey();
@@ -40,7 +40,7 @@ class DogBreedPersistence {
     }
   }
 
-  // Inicializar las razas con confianza 0
+  // Inittialize the breeds data with all breeds set to 0
   static Map<String, double> initializeBreeds() {
     return {
       "afghan_hound": 0,
