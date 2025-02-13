@@ -56,7 +56,7 @@ class BreedItemWidgetState extends State<BreedItemWidget> {
                   BackdropFilter(
                     filter: ImageFilter.blur(sigmaX: 15.0, sigmaY: 15.0),
                     child: Container(
-                      color: Colors.black.withValues(alpha: 0.5),
+                      color: Colors.black.withOpacity(0.5),
                     ),
                   ),
               ],
