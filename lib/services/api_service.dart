@@ -10,8 +10,9 @@ import 'package:frontend_aplication/storage/dog_persistence.dart';
 class ApiService {
   // Method to send an image and update dog breeds
   static Future<Map<String, dynamic>> sendImageToServer(File image) async {
-    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
-    final url = Uri.parse('http://127.0.0.1:5000/predict');
+    final url = Uri.parse(
+        'https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
+    //final url = Uri.parse('http://127.0.0.1:5000/predict');
     final token = await AuthService.getToken();
     final mimeType = _getMimeType(image.path);
 
@@ -65,8 +66,9 @@ class ApiService {
   // Method to send bytes of an image to the server
   static Future<Map<String, dynamic>> sendImageBytesToServer(
       Uint8List bytes) async {
-    //final url = Uri.parse('https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
-    final url = Uri.parse('http://127.0.0.1:5000/predict');
+    final url = Uri.parse(
+        'https://webapptestdogbreed-byhydfa4e4cycugm.westeurope-01.azurewebsites.net/predict');
+    //final url = Uri.parse('http://127.0.0.1:5000/predict');
     final token = await AuthService.getToken();
     final mimeType = lookupMimeType('', headerBytes: bytes);
 
